@@ -1,0 +1,57 @@
+.login{
+  max-width: 65%;
+  margin-top: 5%;
+  left: 15%;
+  background-color: ghostwhite;
+}
+
+.login .login-header{
+  position: absolute;
+  margin-top: -80px;
+  font-size: 40px;
+  color: #673ab7;
+  font-family: 'Dosis', sans-serif;
+  left: 5%;
+}
+
+.login .line{
+
+  border-left: solid;
+  border-color: #673ab7;
+  border-width: 1px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.login login-form {
+  min-width: 100px;
+  max-width: 430px;
+  width: 100%;
+}
+
+.login login-form .field {
+  width: 100%;
+  margin-bottom: 10px
+}
+
+.submit{
+  left: 25%;
+  width: 50%;
+  margin-top: 30px;
+}
+
+.register-area{
+  font-size: 13px;
+  margin-top: 50px;
+}
+
+.register-area a{
+  cursor: pointer;
+  text-decoration: none;
+  color: #673ab7;
+}
+
+.register-area a:hover{
+  color: #7d3ed49c;
+  transition:all 0.25s ease;
+}

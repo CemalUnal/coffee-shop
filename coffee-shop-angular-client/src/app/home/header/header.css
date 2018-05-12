@@ -1,0 +1,20 @@
+.header-margin{
+  padding-left: 40px;
+}
+
+.header-title{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 200px;
+  color: #7958b5;
+  padding-top: 40px;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+

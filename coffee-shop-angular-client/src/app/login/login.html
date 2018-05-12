@@ -1,0 +1,19 @@
+
+<mat-card class="login">
+  <span class="login-header">Login</span>
+  <div class="login-form">
+    <span style="color: #673ab7;">Welcome to our coffee application</span>
+    <mat-form-field style="width: 100%;margin-top: 20px;">
+      <input matInput placeholder="Username" [(ngModel)]="username" type="text">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Password" [(ngModel)]="password" type="password">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="submit" (click)="signIn()">Login</button>
+
+  </div>
+
+  <div class="register-area">If you don't have any account, <a href="register">Register</a> now!</div>
+</mat-card>

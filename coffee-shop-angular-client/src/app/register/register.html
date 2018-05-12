@@ -1,0 +1,62 @@
+
+<mat-card class="login">
+  <span class="login-header">Register</span>
+  <div style="display: flex">
+  <div class="login-form" style="width: 65%;">
+    <span style="color: #673ab7;">Register as a customer</span>
+    <mat-form-field style="width: 100%;margin-top: 20px;">
+      <input matInput placeholder="Username" [(ngModel)]="cusUsername" type="text">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Password" [(ngModel)]="cusPassword" type="password">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+      <input matInput placeholder="Name" [(ngModel)]="cusName" type="text">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+      <input matInput placeholder="Surname" [(ngModel)]="cusSurname" type="text">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Floor No" [(ngModel)]="cusFloorno" type="number">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Building No" [(ngModel)]="cusBuildingno" type="number">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Room No" [(ngModel)]="cusRoomno" type="number">
+    </mat-form-field>
+
+
+    <button mat-raised-button color="primary" class="submit" (click)="signUpForCustomer()">Sign Up!</button>
+
+  </div>
+  <div class="line"></div>
+  <div class="login-form" style="width: 65%;">
+    <span style="color: #673ab7;">Register as an owner</span>
+    <mat-form-field style="width: 100%;margin-top: 20px;">
+      <input matInput placeholder="Username" [(ngModel)]="username" type="text">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+      <input matInput placeholder="Password" [(ngModel)]="password" type="password">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+      <input matInput placeholder="Name" [(ngModel)]="name" type="text">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%;">
+      <input matInput placeholder="Surname" [(ngModel)]="surname" type="text">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="submit" (click)="alert('asd')">Sign Up!</button>
+
+  </div>
+  </div>
+</mat-card>
