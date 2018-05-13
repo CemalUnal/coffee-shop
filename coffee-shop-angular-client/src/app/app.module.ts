@@ -40,7 +40,7 @@ import {AppService} from './app.service';
 
 import { FormsModule } from '@angular/forms';
 import {RegisterScreen} from './register/register';
-
+import {CookieService} from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -85,7 +85,7 @@ import {RegisterScreen} from './register/register';
     MatTooltipModule,
     FormsModule
   ],
-  providers: [AppService],
+  providers: [AppService,CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AppService} from '../app.service';
-import {Route} from '@angular/router';
+import {Route, Router} from '@angular/router';
 
 @Component({
   selector: 'register',
@@ -18,7 +18,7 @@ export class RegisterScreen {
   cusBuildingno: number;
   cusRoomno: number;
 
-  constructor(public service: AppService){}
+  constructor(public service: AppService, public _router: Router){}
 
   public signUpForCustomer(){
       if(this.cusUsername == null && this.cusPassword == null)
@@ -39,7 +39,7 @@ export class RegisterScreen {
       ).then(result => {
         if(result["username"] != null || result["password"] != null) {
           alert('The user has been successfully registered!');
-          Route.navigateByUrl('/');
+          this._router.navigateByUrl('/login');
         }
         else
           return alert('The user with these username and password is not exist');

@@ -10,7 +10,7 @@ export class AppService {
     private http: Http
   ){}
 
-  signIn(username: string, password: string): Promise<any>{
+  signInForCustomer(username: string, password: string): Promise<any>{
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -20,7 +20,7 @@ export class AppService {
     };
 
     return new Promise<any>(resolve => {
-      this.http.post(this.serviceTag + '/signin', body, options)
+      this.http.get(this.serviceTag + '/customers', options)
         .subscribe(
           (data) => {
             resolve(data);
@@ -33,6 +33,30 @@ export class AppService {
         );
     });
   }
+
+    signInForOwners(username: string, password: string): Promise<any>{
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let body = {
+            'username' : username,
+            'password' : password
+        };
+
+        return new Promise<any>(resolve => {
+            this.http.get(this.serviceTag + '/owners', options)
+              .subscribe(
+                (data) => {
+                    resolve(data);
+                },
+                (error) => {
+                    let errMsg = (error.message) ? error.message :
+                        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+                    alert(errMsg);
+                }
+              );
+        });
+    }
 
   signUpForCustomer(
     username: string,

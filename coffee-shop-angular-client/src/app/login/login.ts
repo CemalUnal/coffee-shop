@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {AppService} from '../app.service';
-import {Route, Router} from '@angular/router';
+import {Router} from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'login',
@@ -12,30 +13,59 @@ export class LoginScreen {
 
   username: string;
   password: string;
+  customers: any;
+  owners: any;
 
-  constructor(public service: AppService, public _router: Router){}
+  constructor(
+      public service: AppService,
+      public _router: Router,
+      private cookieService: CookieService
+  ){
+
+  }
 
   public signIn(){
 
-    if(this.username == null && this.password == null)
-      return alert('Both username and password are empty');
-    else if(this.username == null)
-      return alert('Username is empty');
-    else if(this.password == null)
-      return alert('Password is empty');
-
-    this.service.signIn(
-      this.username,
-      this.password
-    ).then(result => {
-      if(result["_body"] != '') {
-        this._router.navigateByUrl('/');
-      }
+      if((this.username == null && this.password == null) || (this.username == '' && this.password == ''))
+          return alert('Both username and password are empty');
+      else if(this.username == null || this.username == '')
+          return alert('Username is empty');
+      else if(this.password == null || this.password == '')
+          return alert('Password is empty');
       else
-        return alert('The user with these username and password is not exist');
-    });
-
+          Promise.all([
+              this.service.signInForCustomer(
+                  this.username,
+                  this.password
+              ).then(result => {
+                  this.customers = JSON.parse(result['_body'])['data'];
+              }),
+              this.service.signInForOwners(
+                  this.username,
+                  this.password
+              ).then(result => {
+                  this.owners = JSON.parse(result['_body'])['data'];
+              })
+          ])
+          .then(resolve => {
+              for(let i=0; i< this.customers.length; i++){
+                  if(this.customers[i]['username'] == this.username){
+                      this.cookieService.set('user','false:' + this.customers[i]['username']);
+                      this._router.navigateByUrl('/');
+                      return;
+                  }
+              }
+              for(let i=0; i< this.owners.length; i++){
+                  if(this.owners[i]['username'] == this.username){
+                      this.cookieService.set('user','false:' + this.customers[i]['username']);
+                      this._router.navigateByUrl('/');
+                      return;
+                  }
+              }
+              return alert('The user with these username and password is not exist');
+          });
 
   }
+
 
 }
