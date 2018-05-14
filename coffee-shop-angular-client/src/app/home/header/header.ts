@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'header',
@@ -9,5 +10,9 @@ import {Component, Input} from '@angular/core';
 export class HeaderComponent {
 
   @Input() displayType: Boolean;
+
+  constructor(public _router: Router){
+
+  }
 
 }

@@ -50,15 +50,29 @@ export class LoginScreen {
           .then(resolve => {
               for(let i=0; i< this.customers.length; i++){
                   if(this.customers[i]['username'] == this.username){
-                      this.cookieService.set('user','false:' + this.customers[i]['username']);
-                      this._router.navigateByUrl('/');
+                      let cookieValue = JSON.stringify({
+                          type : 'customer',
+                          data : {
+                              username : this.customers[i]['username'],
+                              realname : this.customers[i]['realname']
+                          }
+                      });
+                      this.cookieService.set('user', cookieValue);
+                      this._router.navigateByUrl('/home');
                       return;
                   }
               }
               for(let i=0; i< this.owners.length; i++){
                   if(this.owners[i]['username'] == this.username){
-                      this.cookieService.set('user','false:' + this.customers[i]['username']);
-                      this._router.navigateByUrl('/');
+                      let cookieValue = JSON.stringify({
+                          type : 'owner',
+                          data : {
+                              username : this.owners[i]['username'],
+                              realname : this.owners[i]['realname']
+                          }
+                      });
+                      this.cookieService.set('user', cookieValue);
+                      this._router.navigateByUrl('/home');
                       return;
                   }
               }

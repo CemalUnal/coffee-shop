@@ -15,8 +15,11 @@ export class HomeScreen {
   }
 
   ngOnInit(){
-    let storedUser = this.cookieService.get('user');
-    let userType = storedUser.split(':')[0];
-    this.displayType = (userType == 'false');
+    let storedUser = JSON.parse(this.cookieService.get('user'));
+    if(storedUser['type'] == 'customer')
+      this.displayType = false;
+    else if(storedUser['type'] == 'owner')
+      this.displayType = true;
+
   }
 }

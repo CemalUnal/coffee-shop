@@ -40,22 +40,22 @@
   <div class="login-form" style="width: 65%;">
     <span style="color: #673ab7;">Register as an owner</span>
     <mat-form-field style="width: 100%;margin-top: 20px;">
-      <input matInput placeholder="Username" [(ngModel)]="username" type="text">
+      <input matInput placeholder="Username" [(ngModel)]="ownUsername" type="text">
     </mat-form-field>
 
     <mat-form-field style="width: 100%">
-      <input matInput placeholder="Password" [(ngModel)]="password" type="password">
+      <input matInput placeholder="Password" [(ngModel)]="ownPassword" type="password">
     </mat-form-field>
 
     <mat-form-field style="width: 100%;">
-      <input matInput placeholder="Name" [(ngModel)]="name" type="text">
+      <input matInput placeholder="Name" [(ngModel)]="ownName" type="text">
     </mat-form-field>
 
     <mat-form-field style="width: 100%;">
-      <input matInput placeholder="Surname" [(ngModel)]="surname" type="text">
+      <input matInput placeholder="Surname" [(ngModel)]="ownSurname" type="text">
     </mat-form-field>
 
-    <button mat-raised-button color="primary" class="submit" (click)="alert('asd')">Sign Up!</button>
+    <button mat-raised-button color="primary" class="submit" (click)="signUpForOwner()">Sign Up!</button>
 
   </div>
   </div>

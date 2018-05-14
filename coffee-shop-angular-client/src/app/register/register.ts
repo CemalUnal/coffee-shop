@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AppService} from '../app.service';
-import {Route, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'register',
@@ -17,6 +17,11 @@ export class RegisterScreen {
   cusFloorno: number;
   cusBuildingno: number;
   cusRoomno: number;
+
+  ownUsername: string;
+  ownPassword: string;
+  ownName: string;
+  ownSurname: string;
 
   constructor(public service: AppService, public _router: Router){}
 
@@ -37,38 +42,34 @@ export class RegisterScreen {
         this.cusBuildingno,
         this.cusRoomno,
       ).then(result => {
-        if(result["username"] != null || result["password"] != null) {
-          alert('The user has been successfully registered!');
+          alert(JSON.parse(result['_body'])['message']);
           this._router.navigateByUrl('/login');
-        }
-        else
-          return alert('The user with these username and password is not exist');
+      }).catch(err => {
+          alert(err);
       });
   }
 
   public signUpForOwner(){
 
+      if((this.ownUsername == null && this.ownPassword == null) || (this.ownUsername == '' && this.ownPassword == ''))
+          return alert('Both username and password are empty');
+      else if(this.ownUsername == null || this.ownUsername == '')
+          return alert('Username is empty');
+      else if(this.ownPassword == null || this.ownPassword == '')
+          return alert('Password is empty');
+      else
+          this.service.signUpForOwner(
+            this.ownUsername,
+            this.ownPassword,
+            this.ownName,
+            this.ownSurname
+          ).then(result => {
+            alert(JSON.parse(result['_body'])['message']);
+            this._router.navigateByUrl('/login');
+          }).catch(err => {
+              alert(err);
+          });
+
   }
-  // public signIn(){
-  //
-  //   if(this.username == null && this.password == null)
-  //     return alert('Both username and password are empty');
-  //   else if(this.username == null)
-  //     return alert('Username is empty');
-  //   else if(this.password == null)
-  //     return alert('Password is empty');
-  //
-  //   this.service.signIn(
-  //     this.username,
-  //     this.password
-  //   ).then(result => {
-  //     if(result["username"] != null || result["password"] != null)
-  //       Route.navigateByUrl('/');
-  //     else
-  //       return alert('The user with these username and password is not exist');
-  //   });
-  //
-  //
-  // }
 
 }

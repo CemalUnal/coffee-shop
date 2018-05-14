@@ -31,7 +31,7 @@ import {
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AppComponent} from './app.component';
-import {Router} from './app.routing';
+import {AppRouter} from './app.routing';
 import {HeaderComponent} from './home/header/header';
 import {HomeScreen} from './home/home';
 import {LoginScreen} from './login/login';
@@ -41,17 +41,27 @@ import {AppService} from './app.service';
 import { FormsModule } from '@angular/forms';
 import {RegisterScreen} from './register/register';
 import {CookieService} from 'ngx-cookie-service';
-
+import {OrderScreen} from './home/orders/orders';
+import {ProductScreen} from './home/products/products';
+import {UserScreen} from './home/users/users';
+import {CdkTableModule} from '@angular/cdk/table';
 
 @NgModule({
   declarations: [
-    AppComponent, LoginScreen, RegisterScreen, HomeScreen, HeaderComponent
+    AppComponent,
+    LoginScreen,
+    RegisterScreen,
+    HomeScreen,
+    HeaderComponent,
+    OrderScreen,
+    ProductScreen,
+    UserScreen
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
-    Router,
+    AppRouter,
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -83,9 +93,10 @@ import {CookieService} from 'ngx-cookie-service';
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    FormsModule
+    FormsModule,
+    CdkTableModule
   ],
-  providers: [AppService,CookieService],
+  providers: [AppService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
