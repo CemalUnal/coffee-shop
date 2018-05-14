@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path="/owners")
 public class OwnerController {
@@ -33,6 +34,11 @@ public class OwnerController {
     public ResponseEntity<Owner> getOwnerById(@PathVariable("ownerId") Integer ownerId) throws Exception {
         Owner owner = ownerService.getOwnerById(ownerId);
         return new ResponseEntity<>(owner, HttpStatus.OK);
+    }
+
+    @PostMapping("signin")
+    public ResponseEntity<SpecialResponse> signIn(@RequestBody Owner owner) {
+        return ownerService.signIn(owner);
     }
 
     @PostMapping("saveowner")

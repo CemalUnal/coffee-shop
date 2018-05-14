@@ -3,6 +3,7 @@ package com.demo.service;
 import com.demo.model.Customer;
 import com.demo.model.SpecialResponse;
 import com.demo.repository.CustomerRepository;
+import com.demo.utils.SignInUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -97,6 +98,27 @@ public class CustomerServiceImpl implements CustomerService {
 
             specialResponse = new SpecialResponse().data(customer).type(SpecialResponse.TypeEnum.SUCCESS).message("UPDATED: Customer is updated successfully!");
             return new ResponseEntity<>(specialResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("ERROR: Database problem!");
+            return new ResponseEntity<>(specialResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<SpecialResponse> signIn(Customer customer) {
+        SpecialResponse specialResponse;
+        SignInUtil signInUtil = new SignInUtil();
+
+        try {
+            Customer c = customerRepository.getCustomerByUsername(customer.getUsername());
+
+            if (c == null) {
+                specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("DOES_NOT_EXIST: This customer does not exist!");
+                return new ResponseEntity<>(specialResponse, HttpStatus.NOT_FOUND);
+            }
+
+            return signInUtil.checkPassword(customer, c);
+
         } catch (Exception e) {
             specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("ERROR: Database problem!");
             return new ResponseEntity<>(specialResponse, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(path="/customers")
 public class CustomerController {
@@ -33,6 +34,11 @@ public class CustomerController {
     @PostMapping("savecustomer")
     public ResponseEntity<SpecialResponse> addCustomer(@RequestBody Customer customer) {
         return customerService.saveCustomer(customer);
+    }
+
+    @PostMapping("signin")
+    public ResponseEntity<SpecialResponse> signIn(@RequestBody Customer customer) {
+        return customerService.signIn(customer);
     }
 
     @DeleteMapping("deletecustomer/{customerId}")

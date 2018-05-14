@@ -3,6 +3,7 @@ package com.demo.service;
 import com.demo.model.SpecialResponse;
 import com.demo.model.Owner;
 import com.demo.repository.OwnerRepository;
+import com.demo.utils.SignInUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +53,27 @@ public class OwnerServiceImpl implements OwnerService {
             ownerRepository.save(owner);
             specialResponse = new SpecialResponse().data(owner).type(SpecialResponse.TypeEnum.SUCCESS).message("CREATED: Your account created successfully!");
             return new ResponseEntity<>(specialResponse, HttpStatus.CREATED);
+        } catch (Exception e) {
+            specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("ERROR: Database problem!");
+            return new ResponseEntity<>(specialResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseEntity<SpecialResponse> signIn(Owner owner) {
+        SpecialResponse specialResponse;
+        SignInUtil signInUtil = new SignInUtil();
+
+        try {
+            Owner o = ownerRepository.getOwnerByUsername(owner.getUsername());
+
+            if (o == null) {
+                specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("DOES_NOT_EXIST: This owner does not exist!");
+                return new ResponseEntity<>(specialResponse, HttpStatus.NOT_FOUND);
+            }
+
+            return signInUtil.checkPassword(owner, o);
+
         } catch (Exception e) {
             specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("ERROR: Database problem!");
             return new ResponseEntity<>(specialResponse, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -9,4 +9,5 @@ public interface OwnerService {
     ResponseEntity<SpecialResponse> getOwners();
     Owner getOwnerById(long id);
     ResponseEntity<SpecialResponse> saveOwner(Owner owner);
+    ResponseEntity<SpecialResponse> signIn(Owner owner);
 }
