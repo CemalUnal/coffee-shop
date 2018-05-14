@@ -1,5 +1,6 @@
 package com.demo.service;
 
+import com.demo.model.Customer;
 import com.demo.model.SpecialResponse;
 import com.demo.model.Owner;
 import com.demo.repository.OwnerRepository;
@@ -60,23 +61,20 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public ResponseEntity<SpecialResponse> signIn(Owner owner) {
-        SpecialResponse specialResponse;
+    public Owner checkUsernameAndPassword(String username, String suppliantPassword) {
         SignInUtil signInUtil = new SignInUtil();
 
         try {
-            Owner o = ownerRepository.getOwnerByUsername(owner.getUsername());
+            Owner owner = ownerRepository.getOwnerByUsername(username);
 
-            if (o == null) {
-                specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("DOES_NOT_EXIST: This owner does not exist!");
-                return new ResponseEntity<>(specialResponse, HttpStatus.NOT_FOUND);
+            if (owner == null) {
+                return null;
             }
 
-            return signInUtil.checkPassword(owner, o);
+            return (Owner) signInUtil.checkPassword(suppliantPassword, owner);
 
         } catch (Exception e) {
-            specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("ERROR: Database problem!");
-            return new ResponseEntity<>(specialResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            return null;
         }
     }
 }

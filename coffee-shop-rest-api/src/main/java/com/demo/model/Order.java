@@ -19,11 +19,14 @@ public class Order extends BaseEntity {
     @Column(name = "neworsent", nullable = false)
     private String neworsent;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(name = "orderdate", nullable = false)
+    private String orderdate;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer_id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product_id;
 
@@ -49,5 +52,13 @@ public class Order extends BaseEntity {
 
     public void setProduct(Product product_id) {
         this.product_id = product_id;
+    }
+
+    public String getOrderdate() {
+        return orderdate;
+    }
+
+    public void setOrderdate(String orderdate) {
+        this.orderdate = orderdate;
     }
 }

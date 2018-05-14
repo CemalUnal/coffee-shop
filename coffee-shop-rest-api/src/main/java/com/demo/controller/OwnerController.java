@@ -36,11 +36,6 @@ public class OwnerController {
         return new ResponseEntity<>(owner, HttpStatus.OK);
     }
 
-    @PostMapping("signin")
-    public ResponseEntity<SpecialResponse> signIn(@RequestBody Owner owner) {
-        return ownerService.signIn(owner);
-    }
-
     @PostMapping("saveowner")
     public ResponseEntity<SpecialResponse> addOwner(@RequestBody Owner owner) {
         return ownerService.saveOwner(owner);

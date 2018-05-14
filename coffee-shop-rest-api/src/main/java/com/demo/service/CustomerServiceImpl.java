@@ -2,6 +2,7 @@ package com.demo.service;
 
 import com.demo.model.Customer;
 import com.demo.model.SpecialResponse;
+import com.demo.model.User;
 import com.demo.repository.CustomerRepository;
 import com.demo.utils.SignInUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,17 +45,27 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public ResponseEntity<SpecialResponse> saveCustomer(Customer customer) {
         SpecialResponse specialResponse;
+
         try {
             Customer c = customerRepository.getCustomerByUsername(customer.getUsername());
+
             if (c != null) {
-                specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("BAD_REQUEST: This username is already taken!");
+                specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR)
+                        .message("BAD_REQUEST: This username is already taken!");
+
                 return new ResponseEntity<>(specialResponse, HttpStatus.BAD_REQUEST);
             }
+
             customerRepository.save(customer);
-            specialResponse = new SpecialResponse().data(customer).type(SpecialResponse.TypeEnum.SUCCESS).message("CREATED: Your account created successfully!");
+
+            specialResponse = new SpecialResponse().data(customer).type(SpecialResponse.TypeEnum.SUCCESS)
+                    .message("CREATED: Your account created successfully!");
+
             return new ResponseEntity<>(specialResponse, HttpStatus.CREATED);
         } catch (Exception e) {
-            specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("ERROR: Database problem!");
+            specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR)
+                    .message("ERROR: Database problem!");
+
             return new ResponseEntity<>(specialResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -62,6 +73,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public ResponseEntity<SpecialResponse> deleteCustomer(long id) {
         SpecialResponse specialResponse;
+
         try {
             Customer customer = getCustomerById(id);
             if (customer == null) {
@@ -105,23 +117,25 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResponseEntity<SpecialResponse> signIn(Customer customer) {
-        SpecialResponse specialResponse;
+    public Customer checkUsernameAndPassword(String username, String suppliantPassword) {
         SignInUtil signInUtil = new SignInUtil();
 
         try {
-            Customer c = customerRepository.getCustomerByUsername(customer.getUsername());
+            Customer customer = customerRepository.getCustomerByUsername(username);
 
-            if (c == null) {
-                specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("DOES_NOT_EXIST: This customer does not exist!");
-                return new ResponseEntity<>(specialResponse, HttpStatus.NOT_FOUND);
+            if (customer == null) {
+                return null;
             }
 
-            return signInUtil.checkPassword(customer, c);
+            return (Customer) signInUtil.checkPassword(suppliantPassword, customer);
 
         } catch (Exception e) {
-            specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR).message("ERROR: Database problem!");
-            return new ResponseEntity<>(specialResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+            return null;
         }
+    }
+
+    @Override
+    public Customer userIsCustomer(String username) {
+        return customerRepository.getCustomerByUsername(username);
     }
 }

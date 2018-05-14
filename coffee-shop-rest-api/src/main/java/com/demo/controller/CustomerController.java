@@ -36,11 +36,6 @@ public class CustomerController {
         return customerService.saveCustomer(customer);
     }
 
-    @PostMapping("signin")
-    public ResponseEntity<SpecialResponse> signIn(@RequestBody Customer customer) {
-        return customerService.signIn(customer);
-    }
-
     @DeleteMapping("deletecustomer/{customerId}")
     public ResponseEntity<SpecialResponse> deleteCustomer(@PathVariable("customerId") Integer customerId) {
         return customerService.deleteCustomer(customerId);

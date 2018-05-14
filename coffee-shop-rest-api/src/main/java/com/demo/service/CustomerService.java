@@ -2,6 +2,7 @@ package com.demo.service;
 
 import com.demo.model.Customer;
 import com.demo.model.SpecialResponse;
+import com.demo.model.User;
 import org.springframework.http.ResponseEntity;
 
 public interface CustomerService {
@@ -11,5 +12,6 @@ public interface CustomerService {
     ResponseEntity<SpecialResponse> saveCustomer(Customer customer);
     ResponseEntity<SpecialResponse> deleteCustomer(long id);
     ResponseEntity<SpecialResponse> updateCustomer(long id, Customer newCustomer);
-    ResponseEntity<SpecialResponse> signIn(Customer customer);
+    Customer checkUsernameAndPassword(String username, String suppliantPassword);
+    Customer userIsCustomer(String username);
 }
