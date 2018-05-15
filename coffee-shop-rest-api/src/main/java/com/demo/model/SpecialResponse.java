@@ -5,8 +5,6 @@ public class SpecialResponse {
     public enum TypeEnum {
         ERROR("ERROR"),
 
-        INFO("INFO"),
-
         SUCCESS("SUCCESS"),
 
         WARNING("WARNING");
@@ -66,14 +64,12 @@ public class SpecialResponse {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("class CustomResponse {\n");
 
-        sb.append("    type: ").append(toIndentedString(type)).append("\n");
-        sb.append("    message: ").append(toIndentedString(message)).append("\n");
-        sb.append("    data: ").append(toIndentedString(data)).append("\n");
-        sb.append("}");
-        return sb.toString();
+        return "class CustomResponse {\n" +
+                "    type: " + toIndentedString(type) + "\n" +
+                "    message: " + toIndentedString(message) + "\n" +
+                "    data: " + toIndentedString(data) + "\n" +
+                "}";
     }
 
     private String toIndentedString(java.lang.Object o) {

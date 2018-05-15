@@ -27,7 +27,7 @@ public class Customer extends User {
     @Column(name = "roomno", nullable = false)
     private Integer roomno;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer_id", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "customer", fetch = FetchType.EAGER)
     private Set<Order> orders = new HashSet<>();
 
     public Integer getFloorno() {

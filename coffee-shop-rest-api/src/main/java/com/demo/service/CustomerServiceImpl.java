@@ -2,7 +2,6 @@ package com.demo.service;
 
 import com.demo.model.Customer;
 import com.demo.model.SpecialResponse;
-import com.demo.model.User;
 import com.demo.repository.CustomerRepository;
 import com.demo.utils.SignInUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,10 +131,5 @@ public class CustomerServiceImpl implements CustomerService {
         } catch (Exception e) {
             return null;
         }
-    }
-
-    @Override
-    public Customer userIsCustomer(String username) {
-        return customerRepository.getCustomerByUsername(username);
     }
 }

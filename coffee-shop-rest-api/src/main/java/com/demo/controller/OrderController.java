@@ -28,4 +28,19 @@ public class OrderController {
     public ResponseEntity<SpecialResponse> getOrders() throws Exception {
         return orderService.getOrders();
     }
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<SpecialResponse> getOrderById(@PathVariable("orderId") Integer orderId) throws Exception {
+        return orderService.getOrderById(orderId);
+    }
+
+    @PutMapping("editorder/{orderId}")
+    public ResponseEntity<SpecialResponse> editOrder(@PathVariable("orderId") Integer orderId, @RequestBody Order order) {
+        return orderService.updateOrder(orderId, order);
+    }
+
+    @GetMapping("bycustomer/{customerId}")
+    public ResponseEntity<SpecialResponse> getOrderByCustomerId(@PathVariable("customerId") Integer customerId) throws Exception {
+        return orderService.getOrderByCustomerId(customerId);
+    }
 }

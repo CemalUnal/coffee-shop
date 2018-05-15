@@ -22,7 +22,7 @@ public class Product extends BaseEntity {
     @NotEmpty
     private String productname;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product_id", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product", fetch = FetchType.EAGER)
     private Set<Order> orders = new HashSet<>();
 
     public String getProductname() {
