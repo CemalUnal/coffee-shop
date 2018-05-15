@@ -15,7 +15,7 @@
         <ng-container matColumnDef="operations">
             <mat-header-cell *matHeaderCellDef> Operations </mat-header-cell>
             <mat-cell *matCellDef="let product">
-                <button mat-icon-button (click) = "clickEx(product.id)">
+                <button mat-icon-button (click) = "delete(product.id)">
                     <mat-icon>clear</mat-icon>
                 </button>
                 <button mat-icon-button (click) = "addEditPopUp(product.id)">

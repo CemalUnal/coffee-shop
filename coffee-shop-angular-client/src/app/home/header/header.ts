@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -7,12 +7,10 @@ import {Router} from '@angular/router';
   styleUrls: ['./header.css']
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
   @Input() displayType: Boolean;
 
-  constructor(public _router: Router){
-
-  }
+  constructor(public _router: Router){}
 
 }

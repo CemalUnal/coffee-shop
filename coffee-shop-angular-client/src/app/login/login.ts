@@ -13,8 +13,8 @@ export class LoginScreen {
 
   username: string;
   password: string;
-  customers: any;
-  owners: any;
+  // customers: any;
+  // owners: any;
 
   constructor(
       public service: AppService,
@@ -26,58 +26,57 @@ export class LoginScreen {
 
   public signIn(){
 
+      let isOwner = null;
+
       if((this.username == null && this.password == null) || (this.username == '' && this.password == ''))
           return alert('Both username and password are empty');
       else if(this.username == null || this.username == '')
           return alert('Username is empty');
       else if(this.password == null || this.password == '')
           return alert('Password is empty');
-      else
-          Promise.all([
-              this.service.signInForCustomer(
-                  this.username,
-                  this.password
-              ).then(result => {
-                  this.customers = JSON.parse(result['_body'])['data'];
-              }),
-              this.service.signInForOwners(
-                  this.username,
-                  this.password
-              ).then(result => {
-                  this.owners = JSON.parse(result['_body'])['data'];
-              })
-          ])
-          .then(resolve => {
-              for(let i=0; i< this.customers.length; i++){
-                  if(this.customers[i]['username'] == this.username){
-                      let cookieValue = JSON.stringify({
-                          type : 'customer',
-                          data : {
-                              username : this.customers[i]['username'],
-                              realname : this.customers[i]['realname']
-                          }
-                      });
-                      this.cookieService.set('user', cookieValue);
-                      this._router.navigateByUrl('/home');
-                      return;
-                  }
+      else {
+
+          this.service.signIn(
+              this.username,
+              this.password
+          ).then((result) => {
+              let user = JSON.parse(result)['data'];
+              if(user['floorno'] != undefined ||
+                  user['roomno'] != undefined ||
+                  user['buildingno'] != undefined ){
+                  let cookieValue = JSON.stringify({
+                      type : 'customer',
+                      data : {
+                          username : user['username'],
+                          realname : user['realname'],
+                          surname : user['surname'],
+                          floorno : user['floorno'],
+                          roomno : user['roomno'],
+                          buildingno : user['buildingno']
+                      }
+                  });
+                  this.cookieService.set('user', cookieValue);
               }
-              for(let i=0; i< this.owners.length; i++){
-                  if(this.owners[i]['username'] == this.username){
-                      let cookieValue = JSON.stringify({
-                          type : 'owner',
-                          data : {
-                              username : this.owners[i]['username'],
-                              realname : this.owners[i]['realname']
-                          }
-                      });
-                      this.cookieService.set('user', cookieValue);
-                      this._router.navigateByUrl('/home');
-                      return;
-                  }
+              else{
+                  let cookieValue = JSON.stringify({
+                      type : 'owner',
+                      data : {
+                          username : user['username'],
+                          realname : user['realname'],
+                          surname : user['surname']
+                      }
+                  });
+                  this.cookieService.set('user', cookieValue);
               }
-              return alert('The user with these username and password is not exist');
+
+              this._router.navigateByUrl('/home');
+          }).catch((err) => {
+                alert('User can not be logged in');
           });
+
+
+
+      }
 
   }
 
