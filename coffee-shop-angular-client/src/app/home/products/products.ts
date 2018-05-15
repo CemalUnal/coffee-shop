@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import {AppService} from '../../app.service';
+import {HeaderComponent} from '../header/header';
 
 @Component({
     selector: 'products',
@@ -8,7 +9,7 @@ import {AppService} from '../../app.service';
     styleUrls: ['./products.css']
 })
 
-export class ProductScreen{
+export class ProductScreen {
 
     displayedColumns = ['id', 'productname', 'operations'];
     dataSource: MatTableDataSource;
@@ -17,20 +18,20 @@ export class ProductScreen{
     constructor(public appService: AppService){}
 
     ngOnInit(){
+
         this.initialize();
     }
 
     initialize(){
+        HeaderComponent.loading = true;
+        this.dataSource = null;
         this.appService.getProductList().then(result => {
             this.productList = JSON.parse(result['_body'])['data'];
             Promise.resolve(this.productList).then((value => {
                 this.dataSource = new MatTableDataSource(value);
             }));
         });
-    }
-
-    clickEx(id: number){
-        alert(id);
+        // HeaderComponent.loading = false;
     }
 
     addEditPopUp(id?: number): void {
@@ -55,10 +56,21 @@ export class ProductScreen{
                 }
         }
     }
+
+    delete(id: number){
+        this.appService.deleteProduct(id).then((value => {
+            alert('The product has successfully deleted');
+            this.initialize();
+        }));
+    }
 }
 
 export interface Product {
     id: number;
     productname: string;
 }
+
+const ELEMENT_DATA: Product[] = [
+    {id: 1, productname: 'Hydrogen'}
+];
 
