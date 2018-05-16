@@ -1,1 +1,67 @@
-<div>asdasdqwe</div>
+<div class="example-container mat-elevation-z8">
+
+    <mat-table #table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+            <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.username}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="realname">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.realname}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="surname">
+            <mat-header-cell *matHeaderCellDef> Surname </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.surname}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="buildingno" >
+            <mat-header-cell *matHeaderCellDef> Building No. </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.buildingno}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="roomno" >
+            <mat-header-cell *matHeaderCellDef> Room No. </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.roomno}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="floorno">
+            <mat-header-cell *matHeaderCellDef> Floor No. </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.floorno}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="operations">
+            <mat-header-cell *matHeaderCellDef> Operations </mat-header-cell>
+            <mat-cell *matCellDef="let customer">
+                <button mat-icon-button (click) = "delete(customer.id)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+                <button mat-icon-button (click) = "edit(customer.id,
+                                                        customer.username,
+                                                        customer.password,
+                                                        customer.realname,
+                                                        customer.surname,
+                                                        customer.buildingno,
+                                                        customer.roomno,
+                                                        customer.floorno)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+</div>
+
+<button mat-fab class="float-button" matTooltip="Add new user" (click)="add()" color="primary">
+    <mat-icon>add</mat-icon>
+</button>

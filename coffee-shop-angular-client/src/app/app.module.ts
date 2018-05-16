@@ -45,6 +45,7 @@ import {OrderScreen} from './home/orders/orders';
 import {ProductScreen} from './home/products/products';
 import {UserScreen} from './home/users/users';
 import {CdkTableModule} from '@angular/cdk/table';
+import {Popup} from './utils/popup';
 
 @NgModule({
   declarations: [
@@ -55,8 +56,10 @@ import {CdkTableModule} from '@angular/cdk/table';
     HeaderComponent,
     OrderScreen,
     ProductScreen,
-    UserScreen
+    UserScreen,
+    Popup
   ],
+  entryComponents: [Popup],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

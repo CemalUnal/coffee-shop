@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class AppService {
 
-  private serviceTag = 'http://10.100.34.96:8080';
+  private serviceTag = 'http://localhost:32080/BBM488Odev4';
   //localhost:32080/BBM488Odev4
 
   constructor(
@@ -29,7 +29,7 @@ export class AppService {
               (error) => {
                   let errMsg = (error.message) ? error.message :
                       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                  alert(errMsg);
+                  alert(errMsg); //throw?
               }
           );
     });
@@ -168,6 +168,115 @@ export class AppService {
 
         return new Promise<any>(resolve => {
             this.http.delete(this.serviceTag + `/products/deleteproduct/${id}`, options)
+                .subscribe(
+                    (data) => {
+                        resolve(data);
+                    },
+                    (error) => {
+                        let errMsg = (error.message) ? error.message :
+                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+                        alert(errMsg);
+                    }
+                );
+        });
+    }
+
+    getUserList(): Promise<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return new Promise<any>(resolve => {
+            this.http.get(this.serviceTag + '/customers', options)
+                .subscribe(
+                    (data) => {
+                        resolve(data);
+                    },
+                    (error) => {
+                        let errMsg = (error.message) ? error.message :
+                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+                        alert(errMsg);
+                    }
+                );
+        });
+    }
+
+    addUser(
+        username: string,
+        password: string,
+        realname: string,
+        surname: string,
+        floorno: number,
+        buildingno: number,
+        roomno: number,
+    ): Promise<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let body = {
+            'username': username,
+            'password': password,
+            'realname': realname,
+            'surname': surname,
+            'floorno': floorno,
+            'buildingno': buildingno,
+            'roomno' : roomno
+        };
+
+        return new Promise<any>(resolve => {
+            this.http.post(this.serviceTag + '/customers/savecustomer', body, options)
+                .subscribe(
+                    (data) => {
+                        resolve(data);
+                    },
+                    (error) => {
+                        let errMsg = (error.message) ? error.message :
+                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+                        alert(errMsg);
+                    }
+                );
+        });
+    }
+
+    deleteUser(id: number): Promise<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return new Promise<any>(resolve => {
+            this.http.delete(this.serviceTag + `/customers/deletecustomer/${id}`, options)
+                .subscribe(
+                    (data) => {
+                        resolve(data);
+                    },
+                    (error) => {
+                        let errMsg = (error.message) ? error.message :
+                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+                        alert(errMsg);
+                    }
+                );
+        });
+    }
+
+    setUser(id: number,
+            username: string,
+            password: string,
+            realname: string,
+            surname: string,
+            floorno: number,
+            buildingno: number,
+            roomno: number): Promise<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let body = {
+            'id': id,
+            'username': username,
+            'password': password,
+            'realname': realname,
+            'surname': surname,
+            'floorno': floorno,
+            'buildingno': buildingno,
+            'roomno' : roomno
+        };
+
+        return new Promise<any>(resolve => {
+            this.http.put(this.serviceTag + `/customers/editcustomer/${id}`, JSON.stringify(body), options)
                 .subscribe(
                     (data) => {
                         resolve(data);

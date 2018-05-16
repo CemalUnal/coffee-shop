@@ -36,7 +36,7 @@
     </button>
 
     <mat-menu #logoutDropDown="matMenu">
-      <button mat-menu-item >Settings</button>
+      <button mat-menu-item (click)="openPreferences()">Settings</button>
       <button mat-menu-item >Logout</button>
     </mat-menu>
 
@@ -44,5 +44,5 @@
 </mat-toolbar>
 <mat-progress-bar
   [mode]="'indeterminate'"
-  *ngIf="true">
+  *ngIf="false">
 </mat-progress-bar>

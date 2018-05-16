@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import {AppService} from '../../app.service';
-import {HeaderComponent} from '../header/header';
+import {Popup} from '../../utils/popup';
 
 @Component({
     selector: 'products',
@@ -15,15 +15,14 @@ export class ProductScreen {
     dataSource: MatTableDataSource;
     productList: Array<Product>;
 
-    constructor(public appService: AppService){}
+    constructor(public appService: AppService, public dialog: MatDialog){}
 
     ngOnInit(){
 
         this.initialize();
     }
 
-    initialize(){
-        HeaderComponent.loading = true;
+    initialize(): void{
         this.dataSource = null;
         this.appService.getProductList().then(result => {
             this.productList = JSON.parse(result['_body'])['data'];
@@ -31,33 +30,49 @@ export class ProductScreen {
                 this.dataSource = new MatTableDataSource(value);
             }));
         });
-        // HeaderComponent.loading = false;
     }
 
-    addEditPopUp(id?: number): void {
-        if(id == undefined){
-            let productName = '';
-            let product = prompt('Enter a new product name', productName);
-            if(product == null || product == '') return;
-            this.appService.addProduct(product).then((value => {
-                alert('The product has successfully added');
-                this.initialize();
-            }));
-        }
-        else{
-            for(let i = 0; i < this.productList.length; i++)
-                if(this.productList[i]['id'] == id){
-                    let product = prompt('Enter a new product name', this.productList[i]['productname']);
-                    if(product == null || product == '') return;
-                    this.appService.setProduct(this.productList[i]['id'], product).then((value => {
-                        alert('The product has successfully edited');
-                        this.initialize();
-                    }));
-                }
-        }
+    add(){
+        let dialogRef = this.dialog.open(Popup, {
+            data: {
+                header: 'Enter a New Product',
+                fields: [
+                    {name: 'Product Name', value: ''}
+                ]
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined){
+                this.appService.addProduct(result['fields'][0]['value']).then((value => {
+                    alert('The product has successfully added');
+                    this.initialize();
+                }));
+            }
+        });
     }
 
-    delete(id: number){
+    edit(id: number, productname: string){
+        let dialogRef = this.dialog.open(Popup, {
+            data: {
+                header: 'Enter a New Product',
+                fields: [
+                    {name: 'Product Name', value: productname}
+                ]
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined){
+                this.appService.setProduct(id, result['fields'][0]['value']).then((value => {
+                    alert('The product has successfully edited');
+                    this.initialize();
+                }));
+            }
+        });
+    }
+
+    delete(id: number): void{
         this.appService.deleteProduct(id).then((value => {
             alert('The product has successfully deleted');
             this.initialize();
@@ -69,8 +84,4 @@ export interface Product {
     id: number;
     productname: string;
 }
-
-const ELEMENT_DATA: Product[] = [
-    {id: 1, productname: 'Hydrogen'}
-];
 
