@@ -1,8 +1,13 @@
 <h1 mat-dialog-title> {{data.header}} </h1>
 <div mat-dialog-content style="display: grid">
     <mat-form-field *ngFor="let field of data.fields">
-        <input matInput placeholder="{{field.name}}" [(ngModel)]="field.value">
+
+        <input matInput *ngIf="!field.isDisabled" placeholder="{{field.name}}" [(ngModel)]="field.value" [type]="field.type || 'text'">
+        <input matInput *ngIf="field.isDisabled || undefined" placeholder="{{field.name}}" disabled [(ngModel)]="field.value">
+
     </mat-form-field>
+
+    
 </div>
 <div mat-dialog-actions>
     <button mat-button cdkFocusInitial (click)="onSaveClick(data)">Save</button>

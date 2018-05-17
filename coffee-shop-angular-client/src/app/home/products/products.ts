@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {AppService} from '../../app.service';
 import {Popup} from '../../utils/popup';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'products',
@@ -12,13 +13,24 @@ import {Popup} from '../../utils/popup';
 export class ProductScreen {
 
     displayedColumns = ['id', 'productname', 'operations'];
-    dataSource: MatTableDataSource;
+    dataSource: MatTableDataSource<Product>;
     productList: Array<Product>;
+    displayType: Boolean;
 
-    constructor(public appService: AppService, public dialog: MatDialog){}
+    constructor(
+        public appService: AppService,
+        public cookieService: CookieService,
+        public dialog: MatDialog
+    ){}
 
     ngOnInit(){
-
+        let cookieValue = this.cookieService.get('user');
+        if(JSON.parse(cookieValue)['type'] == 'customer'){
+            this.displayType = false;
+        }
+        else{
+            this.displayType = true;
+        }
         this.initialize();
     }
 
@@ -77,6 +89,28 @@ export class ProductScreen {
             alert('The product has successfully deleted');
             this.initialize();
         }));
+    }
+
+    order(id: number, productname: string): void{
+        let dialogRef = this.dialog.open(Popup, {
+            data: {
+                header: 'Order a Product',
+                fields: [
+                    {name: 'Product Name', value: productname, isDisabled: 'true'},
+                    {name: 'Order Quantity', value: '', type: 'number'}
+                ]
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined){
+                let quantity = + result['fields'][1]['value'];
+                for(let i = 0; i < quantity; i++){
+                    this.appService.makeOrder(11,id);
+                }
+                this.initialize();
+            }
+        });
     }
 }
 

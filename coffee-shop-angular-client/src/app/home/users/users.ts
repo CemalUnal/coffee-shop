@@ -12,7 +12,7 @@ import {Popup} from '../../utils/popup';
 export class UserScreen{
 
     displayedColumns = ['id', 'username', 'realname', 'surname', 'buildingno', 'roomno', 'floorno', 'operations'];
-    dataSource: MatTableDataSource;
+    dataSource: MatTableDataSource<User>;
     productList: Array<User>;
 
     constructor(public appService: AppService, public dialog: MatDialog){}
@@ -41,9 +41,9 @@ export class UserScreen{
                     {name: 'Password', value: ''},
                     {name: 'Realname', value: ''},
                     {name: 'Surname', value: ''},
-                    {name: 'Floorno', value: ''},
-                    {name: 'Buildingno', value: ''},
-                    {name: 'Roomno', value: ''}
+                    {name: 'Floorno', value: '', type: 'number'},
+                    {name: 'Buildingno', value: '', type: 'number'},
+                    {name: 'Roomno', value: '', type: 'number'}
                 ]
             }
         });
@@ -81,19 +81,19 @@ export class UserScreen{
                 header: 'Edit User',
                 fields: [
                     {name: 'Username', value: username},
-                    {name: 'Password', value: password},
+                    {name: 'Password', value: password, type: 'password'},
                     {name: 'Realname', value: realname},
                     {name: 'Surname', value: surname},
-                    {name: 'Floorno', value: floorno},
-                    {name: 'Buildingno', value: buildingno},
-                    {name: 'Roomno', value: roomno}
+                    {name: 'Floorno', value: floorno, type: 'number'},
+                    {name: 'Buildingno', value: buildingno, type: 'number'},
+                    {name: 'Roomno', value: roomno, type: 'number'}
                 ]
             }
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined){
-                this.appService.setUser(
+                this.appService.setCustomer(
                     id,
                     result['fields'][0]['value'],
                     result['fields'][1]['value'],

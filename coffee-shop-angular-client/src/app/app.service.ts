@@ -1,74 +1,74 @@
-import {HttpModule, Http, Headers, RequestOptions, Response} from '@angular/http';
-import {Injectable} from '@angular/core';
+import { HttpModule, Http, Headers, RequestOptions, Response } from '@angular/http';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AppService {
 
-  private serviceTag = 'http://localhost:32080/BBM488Odev4';
-  //localhost:32080/BBM488Odev4
+    private serviceTag = 'http://localhost:32080/BBM488Odev4';
+    //localhost:32080/BBM488Odev4
 
-  constructor(
-    private http: Http
-  ){}
+    constructor(
+        private http: Http
+    ) { }
 
-  signIn(username: string, password: string): Promise<any>{
+    signIn(username: string, password: string): Promise<any> {
 
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    let body = {
-      'username' : username,
-      'password' : password
-    };
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let body = {
+            'username': username,
+            'password': password
+        };
 
-    return new Promise<any>(resolve => {
-      this.http.post(this.serviceTag + '/signin', body, options)
-          .subscribe(
-              (data) => {
-                  resolve(data['_body']);
-              },
-              (error) => {
-                  let errMsg = (error.message) ? error.message :
-                      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                  alert(errMsg); //throw?
-              }
-          );
-    });
-  }
+        return new Promise<any>(resolve => {
+            this.http.post(this.serviceTag + '/signin', body, options)
+                .subscribe(
+                    (data) => {
+                        resolve(data['_body']);
+                    },
+                    (error) => {
+                        let errMsg = (error.message) ? error.message :
+                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+                        alert(errMsg); //throw?
+                    }
+                );
+        });
+    }
 
-  signUpForCustomer(
-    username: string,
-    password: string,
-    realname: string,
-    surname: string,
-    floorno?: number,
-    buildingno?: number,
-    roomno?: number
-  ): Promise<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    let body = {
-      'username' : username,
-      'password' : password,
-      'realname': realname,
-      'surname': surname,
-      'floorno': floorno,
-      'buildingno': buildingno,
-      'roomno': roomno
-    };
-    return new Promise<any>(resolve => {
-      this.http.post(this.serviceTag + '/customers/savecustomer', body, options)
-        .subscribe(
-          (data) => {
-            resolve(data);
-          },
-          (error) => {
-            let errMsg = (error.message) ? error.message :
-              error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-            alert(errMsg);
-          }
-        );
-    });
-  }
+    signUpForCustomer(
+        username: string,
+        password: string,
+        realname: string,
+        surname: string,
+        floorno?: number,
+        buildingno?: number,
+        roomno?: number
+    ): Promise<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let body = {
+            'username': username,
+            'password': password,
+            'realname': realname,
+            'surname': surname,
+            'floorno': floorno,
+            'buildingno': buildingno,
+            'roomno': roomno
+        };
+        return new Promise<any>(resolve => {
+            this.http.post(this.serviceTag + '/customers/savecustomer', body, options)
+                .subscribe(
+                    (data) => {
+                        resolve(data);
+                    },
+                    (error) => {
+                        let errMsg = (error.message) ? error.message :
+                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+                        alert(errMsg);
+                    }
+                );
+        });
+    }
 
     signUpForOwner(
         username: string,
@@ -79,8 +79,8 @@ export class AppService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let body = {
-            'username' : username,
-            'password' : password,
+            'username': username,
+            'password': password,
             'realname': realname,
             'surname': surname
         };
@@ -217,7 +217,7 @@ export class AppService {
             'surname': surname,
             'floorno': floorno,
             'buildingno': buildingno,
-            'roomno' : roomno
+            'roomno': roomno
         };
 
         return new Promise<any>(resolve => {
@@ -254,14 +254,14 @@ export class AppService {
         });
     }
 
-    setUser(id: number,
-            username: string,
-            password: string,
-            realname: string,
-            surname: string,
-            floorno: number,
-            buildingno: number,
-            roomno: number): Promise<any> {
+    setCustomer(id: number,
+        username: string,
+        password: string,
+        realname: string,
+        surname: string,
+        floorno: number,
+        buildingno: number,
+        roomno: number): Promise<any> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let body = {
@@ -272,11 +272,57 @@ export class AppService {
             'surname': surname,
             'floorno': floorno,
             'buildingno': buildingno,
-            'roomno' : roomno
+            'roomno': roomno
         };
 
         return new Promise<any>(resolve => {
             this.http.put(this.serviceTag + `/customers/editcustomer/${id}`, JSON.stringify(body), options)
+                .subscribe(
+                    (data) => {
+                        resolve(data);
+                    },
+                    (error) => {
+                        let errMsg = (error.message) ? error.message :
+                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+                        alert(errMsg);
+                    }
+                );
+        });
+    }
+
+    getOrderList(): Promise<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return new Promise<any>(resolve => {
+            this.http.get(this.serviceTag + '/orders', options)
+                .subscribe(
+                    (data) => {
+                        resolve(data);
+                    },
+                    (error) => {
+                        let errMsg = (error.message) ? error.message :
+                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+                        alert(errMsg);
+                    }
+                );
+        });
+    }
+
+    makeOrder(
+        userID: number,
+        productID: number
+    ): Promise<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let body = {
+            'customer_id': userID,
+            'product_id': productID,
+            'orderdate': (new Date()).toDateString()
+        };
+
+        return new Promise<any>(resolve => {
+            this.http.post(this.serviceTag + '/orders/makeorder', body, options)
                 .subscribe(
                     (data) => {
                         resolve(data);

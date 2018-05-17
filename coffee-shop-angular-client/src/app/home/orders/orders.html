@@ -1,1 +1,35 @@
-<div>selam</div>
+<div class="example-container mat-elevation-z8">
+
+    <mat-table #table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Order ID </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="productname">
+            <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.product.productname}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.neworsent}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="operations">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let order">
+
+                <button mat-icon-button matTooltip="Delete Product">
+                    <mat-icon>info</mat-icon>
+                </button>
+
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+</div>

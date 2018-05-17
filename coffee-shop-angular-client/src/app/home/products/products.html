@@ -13,14 +13,20 @@
         </ng-container>
 
         <ng-container matColumnDef="operations">
-            <mat-header-cell *matHeaderCellDef> Operations </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
             <mat-cell *matCellDef="let product">
-                <button mat-icon-button (click) = "delete(product.id)">
+
+                <button mat-icon-button matTooltip="Delete Product" *ngIf="this.displayType" (click) = "delete(product.id)">
                     <mat-icon>clear</mat-icon>
                 </button>
-                <button mat-icon-button (click) = "edit(product.id, product.productname)">
+                <button mat-icon-button matTooltip="Edit Product" *ngIf="this.displayType" (click) = "edit(product.id, product.productname)">
                     <mat-icon>edit</mat-icon>
                 </button>
+
+                <button mat-icon-button matTooltip="Order Product" *ngIf="!this.displayType" (click) = "order(product.id, product.productname)">
+                    <mat-icon>add</mat-icon>
+                </button>
+
             </mat-cell>
         </ng-container>
 
@@ -30,6 +36,6 @@
 
 </div>
 
-<button mat-fab class="float-button" matTooltip="Add new product" (click)="add()" color="primary">
+<button mat-fab class="float-button" matTooltip="Add new product" *ngIf="this.displayType" (click)="add()" color="primary">
     <mat-icon>add</mat-icon>
 </button>

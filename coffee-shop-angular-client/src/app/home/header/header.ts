@@ -1,35 +1,81 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {Popup} from '../../utils/popup';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { Popup } from '../../utils/popup';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { AppService } from '../../app.service';
 
 @Component({
-  selector: 'header',
-  templateUrl: './header.html',
-  styleUrls: ['./header.css']
+    selector: 'header',
+    templateUrl: './header.html',
+    styleUrls: ['./header.css']
 })
 
-export class HeaderComponent{
+export class HeaderComponent implements OnInit {
 
-  @Input() displayType: Boolean;
+    @Input() username: String;
+    @Input() displayType: Boolean;
 
-  constructor(public dialog: MatDialog){}
+    constructor(
+        public dialog: MatDialog,
+        private cookieService: CookieService,
+        public _route: Router,
+        public appService: AppService,
+    ) { }
 
-  openPreferences(): void{
-      let dialogRef = this.dialog.open(Popup, {
-          data: {
-              header: 'Change User Settings',
-              fields: [
-                  {name: 'Username', value: ''},
-                  {name: 'Password', value: ''}
-              ]
-          }
-      });
+    ngOnInit() {
+        let cookieValue = this.cookieService.get('user');
+        if (JSON.parse(cookieValue)['type'] == 'customer') {
+            this.displayType = false;
+        }
+        else {
+            this.displayType = true;
+        }
+        this.username = JSON.parse(cookieValue)['data']['username'];
+    }
 
-      dialogRef.afterClosed().subscribe(result => {
-          if (result !== undefined){
+    openPreferences(): void {
+        let cookieValue = this.cookieService.get('user');
+        let userInfo = JSON.parse(cookieValue)['data'];
+        //owner ise düzeltme yapmayacak
+        let dialogRef = this.dialog.open(Popup, {
+            data: {
+                header: 'Change User Settings',
+                fields: [
+                    { name: 'Password', value: userInfo['password'], type:'password' },
+                    { name: 'Name', value: userInfo['realname'] },
+                    { name: 'Surname', value: userInfo['surname'] },
+                    { name: 'Floor No', value: userInfo['floorno'], type: 'number' },
+                    { name: 'Building No', value: userInfo['buildingno'], type: 'number' },
+                    { name: 'Room No', value: userInfo['roomno'], type: 'number' }
+                ]
+            }
+        });
 
-          }
-      });
-  }
+        dialogRef.afterClosed().subscribe(result => {
+            if (result !== undefined) {
+                console.log(result);
+                this.appService.setCustomer(
+                    userInfo['id'],
+                    userInfo['username'],
+                    result['fields'][0]['value'],
+                    result['fields'][1]['value'],
+                    result['fields'][2]['value'],
+                    result['fields'][3]['value'],
+                    result['fields'][4]['value'],
+                    result['fields'][5]['value']
+                ).then((value => {
+                    alert('The user has successfully updated');
+                }));
+            }
+        });
+
+
+    }
+
+    logout(): void {
+        this.cookieService.set('user',null);
+        this._route.navigateByUrl('/login');
+    }
 
 }
