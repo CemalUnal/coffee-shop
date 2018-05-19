@@ -53,14 +53,17 @@
                                                         customer.floorno)" matTooltip="Edit user">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button matTooltip="Show order history" (click) = "showOrderHistory(customer.id)">
+                <!-- <button mat-icon-button matTooltip="Show order history" (click) = "showOrderHistory(customer.id)">
                     <mat-icon>info</mat-icon>
-                </button>
+                </button> -->
             </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row id="orders" 
+                *matRowDef="let row; columns: displayedColumns;" 
+                (dblclick)="showOrderHistory(row)">
+        </mat-row>
     </mat-table>
 
 </div>

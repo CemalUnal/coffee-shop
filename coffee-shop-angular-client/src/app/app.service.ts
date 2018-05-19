@@ -301,6 +301,24 @@ export class AppService {
         });
     }
 
+    getOrderHistory(id: number): Promise<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return new Promise<any>(resolve => {
+            this.http.get(this.serviceTag + `/orders/bycustomer/${id}`, options)
+                .subscribe(
+                    (data) => {
+                        resolve(data);
+                    },
+                    (error) => {
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
+                    }
+                );
+        });
+    }
+
     makeOrder(
         user: User,
         product_id: number,

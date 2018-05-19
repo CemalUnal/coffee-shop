@@ -44,6 +44,7 @@ import {CookieService} from 'ngx-cookie-service';
 import {OrderScreen} from './home/orders/orders';
 import {ProductScreen} from './home/products/products';
 import {UserScreen} from './home/users/users';
+import {OrderDetails} from './home/users/order-details/order-details';
 import {CdkTableModule} from '@angular/cdk/table';
 import {Popup} from './utils/popup/popup';
 import {Toast} from './utils/toast/toast';
@@ -58,6 +59,7 @@ import {Toast} from './utils/toast/toast';
     OrderScreen,
     ProductScreen,
     UserScreen,
+    OrderDetails,
     Popup,
     Toast
   ],

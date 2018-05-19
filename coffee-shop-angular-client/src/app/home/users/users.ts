@@ -3,6 +3,7 @@ import {MatDialog, MatTableDataSource} from '@angular/material';
 import {AppService} from '../../app.service';
 import {Popup} from '../../utils/popup/popup';
 import { Toast } from '../../utils/toast/toast';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'users',
@@ -14,12 +15,13 @@ export class UserScreen{
 
     displayedColumns = ['id', 'username', 'realname', 'surname', 'buildingno', 'roomno', 'floorno', 'operations'];
     dataSource: MatTableDataSource<User>;
-    productList: Array<User>;
+    userList: Array<User>;
 
     constructor(
         public appService: AppService, 
         public dialog: MatDialog,
-        private toast: Toast
+        private toast: Toast,
+        private _route : Router
     ){}
 
     ngOnInit(){
@@ -30,8 +32,8 @@ export class UserScreen{
     initialize(){
         this.dataSource = null;
         this.appService.getUserList().then(result => {
-            this.productList = JSON.parse(result['_body'])['data'];
-            Promise.resolve(this.productList).then((value => {
+            this.userList = JSON.parse(result['_body'])['data'];
+            Promise.resolve(this.userList).then((value => {
                 this.dataSource = new MatTableDataSource<User>(value);
             }));
         });
@@ -123,6 +125,15 @@ export class UserScreen{
             this.initialize();
         }));
     }
+
+    showOrderHistory(row: any): void{
+        // this.appService.getOrderHistory(id).then((value => {
+        //     console.log(JSON.parse(value['_body'])['data']);
+            
+        // }));
+        this._route.navigateByUrl('/home/users/detail/'+row['id']);
+    }
+
 }
 
 export interface User {
