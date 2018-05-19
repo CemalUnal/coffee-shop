@@ -1,7 +1,6 @@
 package com.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "customer")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Customer extends User {
 
     @Column(name = "floorno", nullable = false)
@@ -28,6 +26,7 @@ public class Customer extends User {
     private Integer roomno;
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "customer", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
     public Integer getFloorno() {

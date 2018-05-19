@@ -67,56 +67,17 @@ Send **POST** request to localhost:8080/orders/makeorder and the body is:
 {
   "newOrSent": "sent",
   "customer": {
-  	  "id": 6,
-	  "username": "customer1",
-	  "password": "1234",
-	  "realname": "gulsen",
-	  "surname": "aktepe",
-	  "floorno": "1",
-	  "buildingno": "5",
-	  "roomno": "7"
+	  "id": 6
   },
   "product": {
-  	"id": 4,
-	"productname": "oralet"
+  	"id": 4
   }
-}
-```
-
-The example response is
-```json
-{
-    "message": "CREATED: Your order is created successfully!",
-    "data": {
-        "id": 20,
-        "orderdate": "15-05-2018 10:54:51",
-        "customer": {
-            "id": 6,
-            "username": "customer1",
-            "realname": "gulsen",
-            "surname": "aktepe",
-            "password": "1234",
-            "floorno": 1,
-            "buildingno": 5,
-            "roomno": 7,
-            "orders": [],
-            "new": false
-        },
-        "product": {
-            "id": 4,
-            "productname": "oralet",
-            "orders": [],
-            "new": false
-        },
-        "newOrSent": "sent",
-        "new": false
-    }
 }
 ```
 
 #### Get Order by its id
 
-Send **GET** request to localhost:8080/orders/21
+Send **GET** request to localhost:8080/orders/order_id
 
 The example response is
 
@@ -124,43 +85,22 @@ The example response is
 {
     "message": "SUCCESS!",
     "data": {
-        "id": 21,
-        "orderdate": "15-05-2018 11:18:04",
+        "id": 29,
+        "orderdate": "19-05-2018 14:01:59",
         "customer": {
-            "id": 6,
-            "username": "customer1",
+            "id": 17,
+            "username": "customer2",
             "realname": "gulsen",
             "surname": "aktepe",
-            "password": "1234",
-            "floorno": 1,
-            "buildingno": 5,
-            "roomno": 7,
-            "orders": [
-                21,
-                {
-                    "id": 20,
-                    "orderdate": "15-05-2018 10:54:51",
-                    "customer": 6,
-                    "product": {
-                        "id": 4,
-                        "productname": "oralet",
-                        "orders": [
-                            20
-                        ],
-                        "new": false
-                    },
-                    "newOrSent": "sent",
-                    "new": false
-                }
-            ],
+            "password": "qwery",
+            "floorno": 2,
+            "buildingno": 3,
+            "roomno": 4,
             "new": false
         },
         "product": {
-            "id": 8,
-            "productname": "qwqsdfsdv",
-            "orders": [
-                21
-            ],
+            "id": 10,
+            "productname": "soda",
             "new": false
         },
         "newOrSent": "sent",
@@ -171,7 +111,7 @@ The example response is
 
 #### Get orders by Customer id
 
-Send **GET** request to localhost:8080/orders/bycustomer/6
+Send **GET** request to localhost:8080/orders/bycustomer/customer_id
 
 The example response is
 
@@ -180,57 +120,78 @@ The example response is
     "message": "SUCCESS!",
     "data": [
         {
-            "id": 20,
-            "orderdate": "15-05-2018 10:54:51",
+            "id": 32,
+            "orderdate": "19-05-2018 14:04:06",
             "customer": {
-                "id": 6,
+                "id": 18,
                 "username": "customer1",
-                "realname": "gulsen",
-                "surname": "aktepe",
-                "password": "1234",
-                "floorno": 1,
-                "buildingno": 5,
-                "roomno": 7,
-                "orders": [
-                    20,
-                    {
-                        "id": 21,
-                        "orderdate": "15-05-2018 11:18:04",
-                        "customer": 6,
-                        "product": {
-                            "id": 8,
-                            "productname": "qwqsdfsdv",
-                            "orders": [
-                                21
-                            ],
-                            "new": false
-                        },
-                        "newOrSent": "sent",
-                        "new": false
-                    }
-                ],
+                "realname": "cemal",
+                "surname": "unal",
+                "password": "qwery",
+                "floorno": 2,
+                "buildingno": 2,
+                "roomno": 2,
                 "new": false
             },
             "product": {
-                "id": 4,
-                "productname": "oralet",
-                "orders": [
-                    20
-                ],
+                "id": 12,
+                "productname": "turk kahvesi",
                 "new": false
             },
             "newOrSent": "sent",
             "new": false
         },
-        21
+        {
+            "id": 33,
+            "orderdate": "19-05-2018 14:05:58",
+            "customer": {
+                "id": 18,
+                "username": "customer1",
+                "realname": "cemal",
+                "surname": "unal",
+                "password": "qwery",
+                "floorno": 2,
+                "buildingno": 2,
+                "roomno": 2,
+                "new": false
+            },
+            "product": {
+                "id": 11,
+                "productname": "latte",
+                "new": false
+            },
+            "newOrSent": "sent",
+            "new": false
+        },
+        {
+            "id": 34,
+            "orderdate": "19-05-2018 14:10:05",
+            "customer": {
+                "id": 18,
+                "username": "customer1",
+                "realname": "cemal",
+                "surname": "unal",
+                "password": "qwery",
+                "floorno": 2,
+                "buildingno": 2,
+                "roomno": 2,
+                "new": false
+            },
+            "product": {
+                "id": 11,
+                "productname": "latte",
+                "new": false
+            },
+            "newOrSent": "sent",
+            "new": false
+        }
     ]
 }
 ```
-If there is more than one order for the current user, response object contains only the id of the orders but not Order object itself. I could not solve it yet, but you can send a GET request again with the order id to retrieve this Order object.
 
 #### Edit Order
 
-Send **PUT** request to localhost:8080/orders/editorder/21
+Send **PUT** request to localhost:8080/orders/editorder/order_id
 
 Example body is:
 

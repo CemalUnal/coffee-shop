@@ -1,7 +1,6 @@
 package com.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
@@ -15,7 +14,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "product")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product extends BaseEntity {
 
     @Column(name = "productname")
@@ -23,6 +21,7 @@ public class Product extends BaseEntity {
     private String productname;
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Order> orders = new HashSet<>();
 
     public String getProductname() {
