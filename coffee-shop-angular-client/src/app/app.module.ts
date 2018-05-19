@@ -26,7 +26,7 @@ import {
   MatSidenavModule,
   MatSliderModule,
   MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatStepperModule, MatTableModule, MatTabsModule,
-  MatToolbarModule, MatTooltipModule
+  MatToolbarModule, MatTooltipModule, MatSnackBar
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -45,7 +45,8 @@ import {OrderScreen} from './home/orders/orders';
 import {ProductScreen} from './home/products/products';
 import {UserScreen} from './home/users/users';
 import {CdkTableModule} from '@angular/cdk/table';
-import {Popup} from './utils/popup';
+import {Popup} from './utils/popup/popup';
+import {Toast} from './utils/toast/toast';
 
 @NgModule({
   declarations: [
@@ -57,9 +58,10 @@ import {Popup} from './utils/popup';
     OrderScreen,
     ProductScreen,
     UserScreen,
-    Popup
+    Popup,
+    Toast
   ],
-  entryComponents: [Popup],
+  entryComponents: [Popup, Toast],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -99,7 +101,7 @@ import {Popup} from './utils/popup';
     FormsModule,
     CdkTableModule
   ],
-  providers: [AppService, CookieService],
+  providers: [AppService, CookieService, Toast],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

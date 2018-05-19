@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {AppService} from '../../app.service';
-import {Popup} from '../../utils/popup';
+import {Popup} from '../../utils/popup/popup';
+import { Toast } from '../../utils/toast/toast';
 
 @Component({
     selector: 'users',
@@ -15,7 +16,11 @@ export class UserScreen{
     dataSource: MatTableDataSource<User>;
     productList: Array<User>;
 
-    constructor(public appService: AppService, public dialog: MatDialog){}
+    constructor(
+        public appService: AppService, 
+        public dialog: MatDialog,
+        private toast: Toast
+    ){}
 
     ngOnInit(){
 
@@ -59,7 +64,7 @@ export class UserScreen{
                     result['fields'][5]['value'],
                     result['fields'][6]['value']
                 ).then((value => {
-                    alert('The user has successfully added');
+                    this.toast.makeToast('The user has successfully added');
                     this.initialize();
                 }));
             }
@@ -103,7 +108,7 @@ export class UserScreen{
                     result['fields'][5]['value'],
                     result['fields'][6]['value']
                 ).then((value => {
-                    alert('The user has successfully updated');
+                    this.toast.makeToast('The user has successfully updated');
                     this.initialize();
                 }));
             }
@@ -114,7 +119,7 @@ export class UserScreen{
 
     delete(id: number): void{
         this.appService.deleteUser(id).then((value => {
-            alert('The user has successfully deleted');
+            this.toast.makeToast('The user has successfully deleted');
             this.initialize();
         }));
     }

@@ -40,18 +40,21 @@
         <ng-container matColumnDef="operations">
             <mat-header-cell *matHeaderCellDef> Operations </mat-header-cell>
             <mat-cell *matCellDef="let customer">
-                <button mat-icon-button (click) = "delete(customer.id)">
+                <button mat-icon-button matTooltip="Delete user" (click) = "delete(customer.id)">
                     <mat-icon>clear</mat-icon>
                 </button>
-                <button mat-icon-button (click) = "edit(customer.id,
+                <button mat-icon-button  (click) = "edit(customer.id,
                                                         customer.username,
                                                         customer.password,
                                                         customer.realname,
                                                         customer.surname,
                                                         customer.buildingno,
                                                         customer.roomno,
-                                                        customer.floorno)">
+                                                        customer.floorno)" matTooltip="Edit user">
                     <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Show order history" (click) = "showOrderHistory(customer.id)">
+                    <mat-icon>info</mat-icon>
                 </button>
             </mat-cell>
         </ng-container>

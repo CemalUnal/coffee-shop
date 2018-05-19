@@ -1,8 +1,11 @@
 import {Component} from '@angular/core';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {AppService} from '../../app.service';
-import {Popup} from '../../utils/popup';
+import {Popup} from '../../utils/popup/popup';
 import { CookieService } from 'ngx-cookie-service';
+import { User } from '../users/users';
+import { resolve } from 'q';
+import { Toast } from '../../utils/toast/toast';
 
 @Component({
     selector: 'products',
@@ -17,14 +20,18 @@ export class ProductScreen {
     productList: Array<Product>;
     displayType: Boolean;
 
+    private user : User;
+
     constructor(
         public appService: AppService,
         public cookieService: CookieService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private toast: Toast
     ){}
 
     ngOnInit(){
         let cookieValue = this.cookieService.get('user');
+        this.user = <User>JSON.parse(cookieValue);
         if(JSON.parse(cookieValue)['type'] == 'customer'){
             this.displayType = false;
         }
@@ -57,7 +64,7 @@ export class ProductScreen {
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined){
                 this.appService.addProduct(result['fields'][0]['value']).then((value => {
-                    alert('The product has successfully added');
+                    this.toast.makeToast('The product has successfully added');
                     this.initialize();
                 }));
             }
@@ -77,7 +84,7 @@ export class ProductScreen {
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined){
                 this.appService.setProduct(id, result['fields'][0]['value']).then((value => {
-                    alert('The product has successfully edited');
+                    this.toast.makeToast('The product has successfully edited');
                     this.initialize();
                 }));
             }
@@ -86,7 +93,7 @@ export class ProductScreen {
 
     delete(id: number): void{
         this.appService.deleteProduct(id).then((value => {
-            alert('The product has successfully deleted');
+            this.toast.makeToast('The product has successfully deleted');
             this.initialize();
         }));
     }
@@ -106,7 +113,7 @@ export class ProductScreen {
             if (result !== undefined){
                 let quantity = + result['fields'][1]['value'];
                 for(let i = 0; i < quantity; i++){
-                    this.appService.makeOrder(11,id);
+                    this.appService.makeOrder(this.user['data'],id,productname);
                 }
                 this.initialize();
             }

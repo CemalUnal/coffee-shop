@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { Toast } from '../utils/toast/toast';
 
 @Component({
     selector: 'login',
@@ -19,7 +20,8 @@ export class LoginScreen {
     constructor(
         public service: AppService,
         public _router: Router,
-        private cookieService: CookieService
+        private cookieService: CookieService,
+        private toast: Toast
     ) {
 
     }
@@ -29,11 +31,11 @@ export class LoginScreen {
         let isOwner = null;
 
         if ((this.username == null && this.password == null) || (this.username == '' && this.password == ''))
-            return alert('Both username and password are empty');
+            return this.toast.makeToastErr('Both username and password are empty');
         else if (this.username == null || this.username == '')
-            return alert('Username is empty');
+            return this.toast.makeToastErr('Username is empty');
         else if (this.password == null || this.password == '')
-            return alert('Password is empty');
+            return this.toast.makeToastErr('Password is empty');
         else {
 
             this.service.signIn(
@@ -72,11 +74,7 @@ export class LoginScreen {
                 }
 
                 this._router.navigateByUrl('/home');
-            }).catch((err) => {
-                alert('User can not be logged in');
-            });
-
-
+            })
 
         }
 

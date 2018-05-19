@@ -1,5 +1,8 @@
 import { HttpModule, Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { User } from './home/users/users';
+import { Product } from './home/products/products';
+import { Toast } from './utils/toast/toast';
 
 @Injectable()
 export class AppService {
@@ -8,7 +11,8 @@ export class AppService {
     //localhost:32080/BBM488Odev4
 
     constructor(
-        private http: Http
+        private http: Http,
+        private toast : Toast
     ) { }
 
     signIn(username: string, password: string): Promise<any> {
@@ -27,9 +31,8 @@ export class AppService {
                         resolve(data['_body']);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg); //throw?
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -62,9 +65,8 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -91,9 +93,8 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -109,9 +110,8 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -132,9 +132,8 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -154,9 +153,8 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -173,9 +171,8 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -191,9 +188,8 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -227,9 +223,8 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -246,9 +241,8 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -282,9 +276,8 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
@@ -301,24 +294,35 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
     }
 
     makeOrder(
-        userID: number,
-        productID: number
+        user: User,
+        product_id: number,
+        productname: string
     ): Promise<any> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let body = {
-            'customer_id': userID,
-            'product_id': productID,
-            'orderdate': (new Date()).toDateString()
+            'newOrSent': 'New',
+            'customer': {
+                'id': user.id,
+                'username': user.username,
+                'realname': user.realname,
+                'surname': user.surname,
+                'floorno': user.floorno,
+                'buildingno': user.buildingno,
+                'roomno': user.roomno
+            },
+            'product': {
+                'id': product_id,
+                'productname': productname
+            }
         };
 
         return new Promise<any>(resolve => {
@@ -328,13 +332,38 @@ export class AppService {
                         resolve(data);
                     },
                     (error) => {
-                        let errMsg = (error.message) ? error.message :
-                            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-                        alert(errMsg);
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
                     }
                 );
         });
     }
 
+    changeOrderStatus(id: number, currentStatus: string): Promise<any> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let body = null;
+        if(currentStatus == 'New')
+            body = {
+                "newOrSent" : "Sent"
+            }
+        else if(currentStatus == 'Sent')
+            body = {
+                "newOrSent" : "New"
+            }
+
+        return new Promise<any>(resolve => {
+            this.http.put(this.serviceTag + `/orders/editorder/${id}`, body, options)
+                .subscribe(
+                    (data) => {
+                        resolve(data);
+                    },
+                    (error) => {
+                        let message = JSON.parse(error['_body'])['message'];
+                        this.toast.makeToastErr(message); 
+                    }
+                );
+        });
+    }
 
 }

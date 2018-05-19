@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AppService } from '../../app.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Toast } from '../../utils/toast/toast';
 
 @Component({
     selector: 'orders',
@@ -18,7 +19,8 @@ export class OrderScreen{
     constructor(
         public appService: AppService,
         public cookieService: CookieService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        public a : Toast
     ){}
 
     ngOnInit(){
@@ -39,6 +41,13 @@ export class OrderScreen{
             Promise.resolve(this.productList).then((value => {
                 this.dataSource = new MatTableDataSource(value);
             }));
+        });
+    }
+
+    changeOrderStatus(id: number, status: string): void {
+        this.appService.changeOrderStatus(id, status).then(result => {
+            this.a.makeToast('The user has successfully deleted');
+            this.initialize();
         });
     }
 

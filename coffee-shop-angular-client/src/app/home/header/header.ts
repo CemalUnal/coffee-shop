@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Popup } from '../../utils/popup';
+import { Popup } from '../../utils/popup/popup';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AppService } from '../../app.service';
+import { Toast } from '../../utils/toast/toast';
 
 @Component({
     selector: 'header',
@@ -21,6 +22,7 @@ export class HeaderComponent implements OnInit {
         private cookieService: CookieService,
         public _route: Router,
         public appService: AppService,
+        private toast: Toast
     ) { }
 
     ngOnInit() {
@@ -65,7 +67,7 @@ export class HeaderComponent implements OnInit {
                     result['fields'][4]['value'],
                     result['fields'][5]['value']
                 ).then((value => {
-                    alert('The user has successfully updated');
+                    this.toast.makeToast('The user has successfully updated');
                 }));
             }
         });

@@ -1,0 +1,22 @@
+
+::ng-deep snack-bar-container.custom-toast {
+    position:fixed;
+  top:10px;
+  right:20px;
+  background-color:white;
+  }
+  
+  ::ng-deep .custom-toast .mat-simple-snackbar {
+    color: darkslateblue;
+  }
+
+  ::ng-deep snack-bar-container.custom-toast-err {
+    position:fixed;
+  top:10px;
+  right:20px;
+  background-color:darkred;
+  }
+  
+  ::ng-deep .custom-toast-err .mat-simple-snackbar {
+    color: whitesmoke;
+  }

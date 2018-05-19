@@ -15,7 +15,8 @@ const appRoutes: Routes = [
     ]
   },
   { path: 'login', component: LoginScreen },
-  { path: 'register', component: RegisterScreen}
+  { path: 'register', component: RegisterScreen},
+  { path: '', redirectTo: 'login', pathMatch: 'full'}
 
   // otherwise redirect to home
   // { path: '**', redirectTo: '' }
