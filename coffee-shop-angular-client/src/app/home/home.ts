@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {CookieService} from 'ngx-cookie-service';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'home',
@@ -10,12 +10,14 @@ export class HomeScreen {
 
   displayType : boolean;
 
-  constructor(private cookieService: CookieService){
+  constructor(
+    private storage: LocalStorageService
+  ){
 
   }
 
   ngOnInit(){
-    let storedUser = JSON.parse(this.cookieService.get('user'));
+    let storedUser = JSON.parse(this.storage.retrieve('user'));
     if(storedUser['type'] == 'customer')
       this.displayType = false;
     else if(storedUser['type'] == 'owner')

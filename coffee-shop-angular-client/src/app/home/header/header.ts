@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Popup } from '../../utils/popup/popup';
-import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AppService } from '../../app.service';
 import { Toast } from '../../utils/toast/toast';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
     selector: 'header',
@@ -19,14 +19,15 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         public dialog: MatDialog,
-        private cookieService: CookieService,
         public _route: Router,
         public appService: AppService,
-        private toast: Toast
+        private toast: Toast,
+        private storage: LocalStorageService
     ) { }
 
     ngOnInit() {
-        let cookieValue = this.cookieService.get('user');
+        let cookieValue = this.storage.retrieve('user');
+        console.log(cookieValue);
         if (JSON.parse(cookieValue)['type'] == 'customer') {
             this.displayType = false;
         }
@@ -37,7 +38,7 @@ export class HeaderComponent implements OnInit {
     }
 
     openPreferences(): void {
-        let cookieValue = this.cookieService.get('user');
+        let cookieValue = this.storage.retrieve('user');
         let userInfo = JSON.parse(cookieValue)['data'];
         //owner ise düzeltme yapmayacak
         let dialogRef = this.dialog.open(Popup, {
@@ -76,7 +77,7 @@ export class HeaderComponent implements OnInit {
     }
 
     logout(): void {
-        this.cookieService.set('user',null);
+        this.storage.clear('user');
         this._route.navigateByUrl('/login');
     }
 

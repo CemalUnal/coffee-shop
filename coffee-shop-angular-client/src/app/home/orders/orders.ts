@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AppService } from '../../app.service';
-import { CookieService } from 'ngx-cookie-service';
 import { Toast } from '../../utils/toast/toast';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
     selector: 'orders',
@@ -19,13 +19,13 @@ export class OrderScreen{
 
     constructor(
         public appService: AppService,
-        public cookieService: CookieService,
         public dialog: MatDialog,
-        public toast : Toast
+        public toast : Toast,
+        private storage: LocalStorageService
     ){}
 
     ngOnInit(){
-        let cookieValue = this.cookieService.get('user');
+        let cookieValue = this.storage.retrieve('user');
         this.id = JSON.parse(cookieValue)['data']['id'];
         if(JSON.parse(cookieValue)['type'] == 'customer'){
             this.displayType = false;

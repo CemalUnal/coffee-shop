@@ -2,10 +2,10 @@ import {Component} from '@angular/core';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {AppService} from '../../app.service';
 import {Popup} from '../../utils/popup/popup';
-import { CookieService } from 'ngx-cookie-service';
 import { User } from '../users/users';
 import { resolve } from 'q';
 import { Toast } from '../../utils/toast/toast';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
     selector: 'products',
@@ -24,13 +24,13 @@ export class ProductScreen {
 
     constructor(
         public appService: AppService,
-        public cookieService: CookieService,
         public dialog: MatDialog,
-        private toast: Toast
+        private toast: Toast,
+        private storage: LocalStorageService
     ){}
 
     ngOnInit(){
-        let cookieValue = this.cookieService.get('user');
+        let cookieValue = this.storage.retrieve('user');
         this.user = <User>JSON.parse(cookieValue);
         if(JSON.parse(cookieValue)['type'] == 'customer'){
             this.displayType = false;

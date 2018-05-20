@@ -37,10 +37,10 @@ import {HomeScreen} from './home/home';
 import {LoginScreen} from './login/login';
 import {HttpModule} from '@angular/http';
 import {AppService} from './app.service';
+import {Ng2Webstorage} from 'ngx-webstorage';
 
 import { FormsModule } from '@angular/forms';
 import {RegisterScreen} from './register/register';
-import {CookieService} from 'ngx-cookie-service';
 import {OrderScreen} from './home/orders/orders';
 import {ProductScreen} from './home/products/products';
 import {UserScreen} from './home/users/users';
@@ -66,6 +66,7 @@ import {Toast} from './utils/toast/toast';
   entryComponents: [Popup, Toast],
   imports: [
     BrowserModule,
+    Ng2Webstorage,
     BrowserAnimationsModule,
     HttpModule,
     AppRouter,
@@ -103,7 +104,7 @@ import {Toast} from './utils/toast/toast';
     FormsModule,
     CdkTableModule
   ],
-  providers: [AppService, CookieService, Toast],
+  providers: [AppService, Toast],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

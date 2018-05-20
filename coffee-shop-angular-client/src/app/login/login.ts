@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AppService } from '../app.service';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { Toast } from '../utils/toast/toast';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
     selector: 'login',
@@ -20,8 +20,8 @@ export class LoginScreen {
     constructor(
         public service: AppService,
         public _router: Router,
-        private cookieService: CookieService,
-        private toast: Toast
+        private toast: Toast,
+        private storage: LocalStorageService
     ) {
 
     }
@@ -58,7 +58,7 @@ export class LoginScreen {
                             buildingno: user['buildingno']
                         }
                     });
-                    this.cookieService.set('user', cookieValue);
+                    this.storage.store('user', cookieValue);
                 }
                 else {
                     let cookieValue = JSON.stringify({
@@ -70,7 +70,7 @@ export class LoginScreen {
                             surname: user['surname']
                         }
                     });
-                    this.cookieService.set('user', cookieValue);
+                    this.storage.store('user', cookieValue);
                 }
 
                 this._router.navigateByUrl('/home');
