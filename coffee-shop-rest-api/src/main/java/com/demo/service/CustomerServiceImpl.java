@@ -99,12 +99,14 @@ public class CustomerServiceImpl implements CustomerService {
                 return new ResponseEntity<>(specialResponse, HttpStatus.NOT_FOUND);
             }
 
-            customer.setPassword(newCustomer.getPassword());
+            if (newCustomer.getPassword() != null)
+                customer.setPassword(newCustomer.getPassword());
             customer.setRealname(newCustomer.getRealname());
             customer.setSurname(newCustomer.getSurname());
             customer.setFloorno(newCustomer.getFloorno());
             customer.setBuildingno(newCustomer.getBuildingno());
             customer.setRoomno(newCustomer.getRoomno());
+
             customerRepository.save(customer);
 
             specialResponse = new SpecialResponse().data(customer).type(SpecialResponse.TypeEnum.SUCCESS).message("UPDATED: Customer is updated successfully!");

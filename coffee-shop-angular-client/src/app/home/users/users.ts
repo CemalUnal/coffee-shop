@@ -75,13 +75,13 @@ export class UserScreen{
     }
 
     edit(id: number,
-                username: string,
-                password: string,
-                realname: string,
-                surname: string,
-                buildingno: number,
-                roomno: number,
-                floorno: number): void {
+        username: string,
+        password: string,
+        realname: string,
+        surname: string,
+        buildingno: number,
+        roomno: number,
+        floorno: number): void {
 
         let dialogRef = this.dialog.open(Popup, {
             data: {

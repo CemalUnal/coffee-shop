@@ -46,7 +46,7 @@ export class OrderScreen{
 
     changeOrderStatus(id: number, status: string): void {
         this.appService.changeOrderStatus(id, status).then(result => {
-            this.a.makeToast('The user has successfully deleted');
+            this.a.makeToast('The order has successfully updated!');
             this.initialize();
         });
     }

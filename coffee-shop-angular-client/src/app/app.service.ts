@@ -7,7 +7,8 @@ import { Toast } from './utils/toast/toast';
 @Injectable()
 export class AppService {
 
-    private serviceTag = 'http://localhost:32080/BBM488Odev4';
+    // private serviceTag = 'http://localhost:32080/BBM488Odev4';
+    private serviceTag = 'http://localhost:8080';
     //localhost:32080/BBM488Odev4
 
     constructor(
@@ -361,13 +362,13 @@ export class AppService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let body = null;
-        if(currentStatus == 'New')
+        if(currentStatus.toUpperCase() === 'NEW')
             body = {
-                "newOrSent" : "Sent"
+                "newOrSent" : "SENT"
             }
-        else if(currentStatus == 'Sent')
+        else if(currentStatus.toUpperCase() === 'SENT')
             body = {
-                "newOrSent" : "New"
+                "newOrSent" : "NEW"
             }
 
         return new Promise<any>(resolve => {
