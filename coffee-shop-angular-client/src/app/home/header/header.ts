@@ -80,7 +80,7 @@ export class HeaderComponent implements OnInit {
                             buildingno: result['fields'][5]['value']
                         }
                     });
-                    this.cookieService.set('user', cookieValue);
+                    this.storage.store('user', cookieValue);
 
                     this.toast.makeToast('The user has successfully updated');
                 }));
