@@ -68,6 +68,20 @@ export class HeaderComponent implements OnInit {
                     result['fields'][4]['value'],
                     result['fields'][5]['value']
                 ).then((value => {
+                    let cookieValue = JSON.stringify({
+                        type: 'customer',
+                        data: {
+                            id: userInfo['id'],
+                            username: userInfo['username'],
+                            realname: result['fields'][1]['value'],
+                            surname: result['fields'][2]['value'],
+                            floorno: result['fields'][3]['value'],
+                            roomno: result['fields'][4]['value'],
+                            buildingno: result['fields'][5]['value']
+                        }
+                    });
+                    this.cookieService.set('user', cookieValue);
+
                     this.toast.makeToast('The user has successfully updated');
                 }));
             }
