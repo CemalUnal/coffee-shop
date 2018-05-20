@@ -15,16 +15,18 @@ export class OrderScreen{
     dataSource: MatTableDataSource<Order>;
     productList: Array<Order>;
     displayType: Boolean;
+    id: number;
 
     constructor(
         public appService: AppService,
         public cookieService: CookieService,
         public dialog: MatDialog,
-        public a : Toast
+        public toast : Toast
     ){}
 
     ngOnInit(){
         let cookieValue = this.cookieService.get('user');
+        this.id = JSON.parse(cookieValue)['data']['id'];
         if(JSON.parse(cookieValue)['type'] == 'customer'){
             this.displayType = false;
         }
@@ -36,17 +38,27 @@ export class OrderScreen{
 
     initialize(): void{
         this.dataSource = null;
-        this.appService.getOrderList().then(result => {
-            this.productList = JSON.parse(result['_body'])['data'];
-            Promise.resolve(this.productList).then((value => {
-                this.dataSource = new MatTableDataSource(value);
-            }));
-        });
+        if(this.displayType){
+            this.appService.getOrderList().then(result => {
+                this.productList = JSON.parse(result['_body'])['data'];
+                Promise.resolve(this.productList).then((value => {
+                    this.dataSource = new MatTableDataSource(value);
+                }));
+            });
+        }
+        else{
+            this.appService.getOrderHistory(this.id).then(result => {
+                this.productList = JSON.parse(result['_body'])['data'];
+                Promise.resolve(this.productList).then((value => {
+                    this.dataSource = new MatTableDataSource(value);
+                }));
+            });
+        }
     }
 
     changeOrderStatus(id: number, status: string): void {
         this.appService.changeOrderStatus(id, status).then(result => {
-            this.a.makeToast('The order has successfully updated!');
+            this.toast.makeToast('The order has successfully updated!');
             this.initialize();
         });
     }

@@ -45,7 +45,7 @@ export class UserScreen{
                 header: 'Add User',
                 fields: [
                     {name: 'Username', value: ''},
-                    {name: 'Password', value: ''},
+                    {name: 'Password', value: '', type:'password'},
                     {name: 'Realname', value: ''},
                     {name: 'Surname', value: ''},
                     {name: 'Floorno', value: '', type: 'number'},
