@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
         SpecialResponse specialResponse;
 
         try {
-            products = (List<Product>) productRepository.findAll();
+            products = productRepository.findAllByOrderByIdAsc();
             specialResponse = new SpecialResponse().data(products).type(SpecialResponse.TypeEnum.SUCCESS).message("SUCCESS!");
             return new ResponseEntity<>(specialResponse, HttpStatus.OK);
         } catch (Exception e) {

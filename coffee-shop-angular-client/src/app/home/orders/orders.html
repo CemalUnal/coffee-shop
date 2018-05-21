@@ -23,12 +23,12 @@
         </ng-container>
 
         <ng-container matColumnDef="operations">
-            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
             <mat-cell *matCellDef="let order">
 
-                <button mat-icon-button *ngIf="!this.displayType" matTooltip="Show details">
+                <!-- <button mat-icon-button *ngIf="!this.displayType" matTooltip="Show details">
                     <mat-icon>info</mat-icon>
-                </button>
+                </button> -->
                 <button mat-icon-button *ngIf="this.displayType" matTooltip="Change status" 
                             (click)="changeOrderStatus(order.id, order.newOrSent)">
                     <mat-icon>compare_arrows</mat-icon>

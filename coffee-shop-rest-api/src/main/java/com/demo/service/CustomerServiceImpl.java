@@ -27,7 +27,7 @@ public class CustomerServiceImpl implements CustomerService {
         SpecialResponse specialResponse;
 
         try {
-            customers = (List<Customer>) customerRepository.findAll();
+            customers = customerRepository.findAllByOrderByIdAsc();
             specialResponse = new SpecialResponse().data(customers).type(SpecialResponse.TypeEnum.SUCCESS).message("SUCCESS!");
             return new ResponseEntity<>(specialResponse, HttpStatus.OK);
         } catch (Exception e) {
@@ -101,6 +101,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             if (newCustomer.getPassword() != null)
                 customer.setPassword(newCustomer.getPassword());
+            customer.setUsername(newCustomer.getUsername());
             customer.setRealname(newCustomer.getRealname());
             customer.setSurname(newCustomer.getSurname());
             customer.setFloorno(newCustomer.getFloorno());

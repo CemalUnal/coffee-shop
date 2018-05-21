@@ -78,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
         SpecialResponse specialResponse;
 
         try {
-            orders = (List<Order>) orderRepository.findAll();
+            orders = orderRepository.findAllByOrderByIdAsc();
 
             if (orders == null) {
                 specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR)
@@ -127,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
 
             Customer customer = customerRepository.findOne(id);
             if (customer != null)
-                orders = orderRepository.findByCustomer(customer);
+                orders = orderRepository.findByCustomerOrderByIdAsc(customer);
 
             if (orders == null) {
                 specialResponse = new SpecialResponse().data(null).type(SpecialResponse.TypeEnum.ERROR)
