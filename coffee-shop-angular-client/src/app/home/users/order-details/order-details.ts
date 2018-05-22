@@ -16,7 +16,7 @@ export class OrderDetails implements OnInit{
     private user: User;
     private dataSource: MatTableDataSource<Order>;
     private orderList: Array<Order>;
-    displayedColumns = ['id', 'orderdate', 'productname', 'newOrSent'];
+    displayedColumns = ['id', 'username', 'productname', 'orderdate', 'newOrSent'];
 
     constructor(
         public _router: ActivatedRoute,

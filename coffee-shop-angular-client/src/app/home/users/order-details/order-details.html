@@ -4,55 +4,29 @@
         <button mat-fab style="margin:10px;background:transparent" (click)="goBack()">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <!-- <div style="margin-left:10px;margin-top:10px;">
-            <div style="display:flex">
-                <div>
-                    <div>
-                        User ID : {{user['id']}}
-                    </div>
-                    <div>
-                        Username : {{user.username}}
-                    </div>
-                    <div>
-                        Name : {{user.realname}}
-                    </div>
-                </div>
-                <div style="margin-left:20px;">
-                    <div>
-                        Surname : {{user.surname}}
-                    </div>
-                    <div>
-                        Floor No : {{user.floorno}}
-                    </div>
-                    <div>
-                        Room No : {{user.roomno}}
-                    </div>
-                </div>
-                <div style="margin-left:20px;">
-                    <div>
-                        Building No : {{user.buildingno}}
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 
     <mat-table #table [dataSource]="dataSource">
 
         <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Order ID </mat-header-cell>
             <mat-cell *matCellDef="let order"> {{order.id}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="orderdate">
-            <mat-header-cell *matHeaderCellDef> Order Date </mat-header-cell>
-            <mat-cell *matCellDef="let order"> {{order.orderdate}} </mat-cell>
+        <ng-container matColumnDef="username">
+            <mat-header-cell *matHeaderCellDef> Customer </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.customer.username}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="productname">
             <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
             <mat-cell *matCellDef="let order"> {{order.product.productname}} </mat-cell>
         </ng-container>
+
+        <ng-container matColumnDef="orderdate">
+                <mat-header-cell *matHeaderCellDef> Order Date </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.orderdate}} </mat-cell>
+            </ng-container>
 
         <ng-container matColumnDef="newOrSent">
             <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
