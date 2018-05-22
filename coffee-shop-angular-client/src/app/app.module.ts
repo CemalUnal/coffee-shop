@@ -48,6 +48,7 @@ import {OrderDetails} from './home/users/order-details/order-details';
 import {CdkTableModule} from '@angular/cdk/table';
 import {Popup} from './utils/popup/popup';
 import {Toast} from './utils/toast/toast';
+import { OrderDialogComponent } from './home/orders/order-dialog/order-dialog.component';
 
 @NgModule({
   declarations: [
@@ -61,9 +62,10 @@ import {Toast} from './utils/toast/toast';
     UserScreen,
     OrderDetails,
     Popup,
-    Toast
+    Toast,
+    OrderDialogComponent
   ],
-  entryComponents: [Popup, Toast],
+  entryComponents: [Popup, Toast, OrderDialogComponent],
   imports: [
     BrowserModule,
     Ng2Webstorage,

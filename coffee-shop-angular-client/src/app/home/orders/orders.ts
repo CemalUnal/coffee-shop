@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
+import { OrderDialogComponent } from './order-dialog/order-dialog.component';
 import { AppService } from '../../app.service';
+import {Popup} from '../../utils/popup/popup';
 import { Toast } from '../../utils/toast/toast';
 import { LocalStorageService } from 'ngx-webstorage';
 
@@ -16,6 +18,8 @@ export class OrderScreen{
     productList: Array<Order>;
     displayType: Boolean;
     id: number;
+    selectedCustomer: User;
+    selectedProduct: Product;    
 
     constructor(
         public appService: AppService,
@@ -63,9 +67,43 @@ export class OrderScreen{
         });
     }
 
+    add(){
+        let dialog = this.dialog.open(OrderDialogComponent);
+
+        dialog.afterClosed()
+            .subscribe(selection => {
+                if (selection) {
+                    for(let i = 0; i < selection.quantity; i++){
+                        this.appService.makeOrder(selection.customer,
+                                                  selection.product.id,
+                                                  selection.product.productname).then(result => {
+                            this.toast.makeToast('The order has successfully created!');
+                            this.initialize();
+                        });
+                    }
+                    this.initialize();
+                }
+            });
+    }
+
 }
 
 export interface Order {
+    id: number;
+    productname: string;
+}
+
+export interface User {
+    id: number;
+    username: string;
+    realname: string;
+    surname: string;
+    floorno: number;
+    buildingno: number;
+    roomno: number;
+}
+
+export interface Product {
     id: number;
     productname: string;
 }

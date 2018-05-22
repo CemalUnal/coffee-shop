@@ -1,0 +1,35 @@
+<h6 mat-dialog-title>Select a Customer:</h6>
+
+<div mat-dialog-content>
+  <mat-select [(ngModel)]="choosenCustomer">
+    <mat-option *ngFor="let customer of customerList" [value]="customer">
+      {{ customer.username }}
+    </mat-option>
+  </mat-select>
+</div>
+
+<br/>
+
+<h6 mat-dialog-title>Select a Product:</h6>
+
+<div mat-dialog-content>
+  <mat-select [(ngModel)]="choosenProduct">
+    <mat-option *ngFor="let product of productList" [value]="product">
+      {{ product.productname }}
+    </mat-option>
+  </mat-select>
+</div>
+
+<br/>
+
+<div mat-dialog-content>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Product Number" (keyup)="onKeyStroke($event)">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="confirmSelection()" color="primary">
+    Create order
+  </button>
+</div>

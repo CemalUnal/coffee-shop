@@ -99,7 +99,7 @@ public class CustomerServiceImpl implements CustomerService {
                 return new ResponseEntity<>(specialResponse, HttpStatus.NOT_FOUND);
             }
 
-            if (newCustomer.getPassword() != null)
+            if (newCustomer.getPassword() != null && !newCustomer.getPassword().equals(""))
                 customer.setPassword(newCustomer.getPassword());
             customer.setUsername(newCustomer.getUsername());
             customer.setRealname(newCustomer.getRealname());

@@ -44,3 +44,7 @@
     </mat-table>
 
 </div>
+
+<button mat-fab class="float-button" matTooltip="Add new order" *ngIf="this.displayType" (click)="add()" color="primary">
+    <mat-icon>add</mat-icon>
+</button>
