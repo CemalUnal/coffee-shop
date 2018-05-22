@@ -1,7 +1,7 @@
 <h6 mat-dialog-title>Select a Customer:</h6>
 
 <div mat-dialog-content>
-  <mat-select [(ngModel)]="choosenCustomer">
+  <mat-select [(ngModel)]="chosenCustomer">
     <mat-option *ngFor="let customer of customerList" [value]="customer">
       {{ customer.username }}
     </mat-option>
@@ -13,7 +13,7 @@
 <h6 mat-dialog-title>Select a Product:</h6>
 
 <div mat-dialog-content>
-  <mat-select [(ngModel)]="choosenProduct">
+  <mat-select [(ngModel)]="chosenProduct">
     <mat-option *ngFor="let product of productList" [value]="product">
       {{ product.productname }}
     </mat-option>

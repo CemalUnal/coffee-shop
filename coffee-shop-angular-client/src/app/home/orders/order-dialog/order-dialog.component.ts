@@ -34,15 +34,15 @@ export class OrderDialogComponent implements OnInit {
     });
   }
 
-  choosenCustomer: User;
-  choosenProduct: Product;
+  chosenCustomer: User;
+  chosenProduct: Product;
 
   confirmSelection() {
     let quantity = this.quantity;
 
     let data = {
-      customer: this.choosenCustomer,
-      product: this.choosenProduct,
+      customer: this.chosenCustomer,
+      product: this.chosenProduct,
       quantity: quantity
     }
 
