@@ -328,7 +328,7 @@ export class AppService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let body = {
-            'newOrSent': 'New',
+            'newOrSent': 'NEW',
             'customer': {
                 'id': user.id,
                 'username': user.username,
