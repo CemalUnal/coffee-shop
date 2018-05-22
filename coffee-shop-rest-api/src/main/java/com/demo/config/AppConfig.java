@@ -23,7 +23,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-//(basePackages = "com.demo.repository", entityManagerFactoryRef="emf")
 @EnableWebMvc
 @EnableJpaRepositories(basePackages = "com.demo.repository")
 @EnableTransactionManagement

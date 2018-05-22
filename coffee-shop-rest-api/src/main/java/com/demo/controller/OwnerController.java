@@ -20,11 +20,6 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
-//    @GetMapping(value="/{ownerId}", produces={MediaType.APPLICATION_JSON_VALUE})
-//    public Owner getOwnerById(@PathVariable("ownerId") Integer ownerId) throws Exception {
-//        return ownerService.getOwnerById(ownerId);
-//    }
-
     @GetMapping
     public ResponseEntity<SpecialResponse> getOwners() throws Exception {
         return ownerService.getOwners();

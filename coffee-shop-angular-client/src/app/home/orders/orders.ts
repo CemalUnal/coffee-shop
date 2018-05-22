@@ -11,7 +11,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 })
 
 export class OrderScreen{
-    displayedColumns = ['id', 'productname', 'status', 'orderDate', 'operations'];
+    displayedColumns = ['id', 'username', 'productname', 'status', 'orderDate', 'operations'];
     dataSource: MatTableDataSource<Order>;
     productList: Array<Order>;
     displayType: Boolean;

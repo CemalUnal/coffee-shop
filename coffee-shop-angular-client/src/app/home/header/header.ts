@@ -27,7 +27,6 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         let cookieValue = this.storage.retrieve('user');
-        console.log(cookieValue);
         if (JSON.parse(cookieValue)['type'] == 'customer') {
             this.displayType = false;
         }
@@ -57,7 +56,6 @@ export class HeaderComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined) {
-                console.log(result);
                 this.appService.setCustomer(
                     userInfo['id'],
                     userInfo['username'],

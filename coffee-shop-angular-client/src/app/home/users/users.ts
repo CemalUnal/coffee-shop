@@ -14,8 +14,12 @@ import { Router } from '@angular/router';
 export class UserScreen{
 
     displayedColumns = ['id', 'username', 'realname', 'surname', 'buildingno', 'roomno', 'floorno', 'operations'];
+    displayedColumnsForOrderHistory = ['id', 'username', 'productname', 'status', 'orderdate'];
     dataSource: MatTableDataSource<User>;
+    dataSourceOrderHistory: MatTableDataSource<Order>;
     userList: Array<User>;
+    orderList: Array<Order>;
+    displayOrderHistory: Boolean;
 
     constructor(
         public appService: AppService, 
@@ -24,12 +28,11 @@ export class UserScreen{
         private _route : Router
     ){}
 
-    ngOnInit(){
-
+    ngOnInit() {
         this.initialize();
     }
 
-    initialize(){
+    initialize() {
         this.dataSource = null;
         this.appService.getUserList().then(result => {
             this.userList = JSON.parse(result['_body'])['data'];
@@ -126,12 +129,20 @@ export class UserScreen{
         }));
     }
 
-    showOrderHistory(row: any): void{
-        // this.appService.getOrderHistory(id).then((value => {
-        //     console.log(JSON.parse(value['_body'])['data']);
+    showOrderHistory(id: number): void{
+        this.appService.getOrderHistory(id).then((value => {
             
-        // }));
-        this._route.navigateByUrl('/home/users/detail/'+row['id']);
+            this.orderList = JSON.parse(value['_body'])['data'];
+
+            Promise.resolve(this.orderList).then((value => {
+                this.dataSourceOrderHistory = new MatTableDataSource<Order>(value);
+                this.displayOrderHistory = true;
+            }));
+        }));
+    }
+
+    closeOrderHistory(): void {
+        this.displayOrderHistory = false;
     }
 
 }
@@ -144,4 +155,17 @@ export interface User {
     floorno: number;
     buildingno: number;
     roomno: number;
+}
+
+export interface Order {
+    id: number;
+    orderdate: string;
+    customer: User;
+    product: Product;
+    newOrSent: string;
+}
+
+export interface Product {
+    id: number;
+    productname: string;
 }

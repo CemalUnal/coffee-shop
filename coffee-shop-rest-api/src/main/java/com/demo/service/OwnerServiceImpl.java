@@ -1,6 +1,5 @@
 package com.demo.service;
 
-import com.demo.model.Customer;
 import com.demo.model.SpecialResponse;
 import com.demo.model.Owner;
 import com.demo.repository.OwnerRepository;

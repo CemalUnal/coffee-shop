@@ -7,6 +7,11 @@
             <mat-cell *matCellDef="let order"> {{order.id}} </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="username">
+            <mat-header-cell *matHeaderCellDef> Customer </mat-header-cell>
+            <mat-cell *matCellDef="let order"> {{order.customer.username}} </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="productname">
             <mat-header-cell *matHeaderCellDef> Product Name </mat-header-cell>
             <mat-cell *matCellDef="let order"> {{order.product.productname}} </mat-cell>
@@ -26,9 +31,6 @@
             <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
             <mat-cell *matCellDef="let order">
 
-                <!-- <button mat-icon-button *ngIf="!this.displayType" matTooltip="Show details">
-                    <mat-icon>info</mat-icon>
-                </button> -->
                 <button mat-icon-button *ngIf="this.displayType" matTooltip="Change status" 
                             (click)="changeOrderStatus(order.id, order.newOrSent)">
                     <mat-icon>compare_arrows</mat-icon>
