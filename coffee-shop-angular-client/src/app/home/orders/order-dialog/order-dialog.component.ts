@@ -40,16 +40,11 @@ export class OrderDialogComponent implements OnInit {
   confirmSelection() {
     let quantity = this.quantity;
 
-    console.log(this.choosenCustomer.id);
-
     let data = {
       customer: this.choosenCustomer,
       product: this.choosenProduct,
       quantity: quantity
     }
-    // for(let i = 0; i < this.quantity; i++){
-    //   console.log(this.quantity);
-    // }
 
     this.dialogRef.close(data);
   }
